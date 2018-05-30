@@ -1,0 +1,65 @@
+button,
+[role='button'],
+.btn,
+[type='submit'] {
+    background-color: @color-cobalt;
+    border: 0px;
+    box-shadow: none;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: @pt-sans;
+    font-size: 1.25rem;
+    font-weight: bold;
+    letter-spacing: 0.009375em;
+    line-height: 1.125;
+    margin: 20px;
+    padding: 0.7em 3.3em;
+    transform: translate3d(0, 0, 0) scale(0.999);
+    width: auto;
+    position: relative;
+    .transition(all);
+
+    &:hover:not(.btn-disabled),&:focus:not(.btn-disabled) {
+      background-color: @color-cobalt-light;
+      color: #ffffff;
+      outline: 0px;
+      transform: translate3d(0, 0, 0) scale(1.02);
+      .shadow-1;
+    }
+}
+
+.btn-sm {
+    font-size: 1.125rem;
+    padding: 0.55em 2.95em;
+}
+
+.btn-secondary {
+  background-color: @color-lightbulb;
+  color: @color-blackout; //design calls for rgb(40,40,40)
+
+  &:hover:not(.btn-disabled),&:focus:not(.btn-disabled) {
+    background-color: @color-lightbulb-light;
+    color: @color-blackout;
+  }
+}
+
+.btn-disabled {
+  background-color: @color-blackout-lighter;
+  cursor: default;
+
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+.btn-icon {
+  font-size: 25px;
+  line-height: 0px;
+  min-width: 50px;
+  padding: 0.5em;
+}
+
+.btn-icon input[value="submit"] {
+  display: none;
+}

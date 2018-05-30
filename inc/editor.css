@@ -1,0 +1,57 @@
+body {
+	margin: 0 auto;
+	padding: 2rem;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+	font-size: inherit;
+	max-width: 50rem;
+}
+
+body.wp-autoresize {
+  padding: 2rem !important;
+}
+
+a, a:visited {
+  color: rgb(40, 52, 175);
+  text-decoration: none;
+}
+a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+table {
+  width: 100%;
+}
+
+thead {
+  color: black;
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.btn,
+.mce-content-body a[data-mce-selected].btn {
+  background-color: rgb(40, 52, 175);
+  color: #fff !important;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.425em 1.25em;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  margin-left: 0;
+  margin-right: 0.5em;
+}
+
+.wpview.wpview-wrap {
+  width: 100%;
+  height: 0;
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.wpview.wpview-wrap iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

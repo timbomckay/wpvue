@@ -1,0 +1,64 @@
+{
+  "name": "bsm",
+  "version": "1.0.0",
+  "description": "Boilerplate WP setup for a Vue based theme.",
+  "scripts": {
+    "dev": "webpack-dev-server --progress --mode development --env dev --config ./config/webpack.config.js",
+    "dev:watch": "webpack --mode development --env stage --config config/webpack.config.js --watch --progress",
+    "staging": "webpack --mode development --env stage --config config/webpack.config.js",
+    "build": "webpack --mode production --env prod --config config/webpack.config.js && npm run themebump",
+    "themebump": "sed -i.bak \"s/^Version:.*/Version: $(git log --pretty=\"%h\" -n1 HEAD)/\" ./style.css",
+    "svg:optimize": "svgo -f ./images/icons --disable=removeViewBox --enable=removeTitle",
+    "svg:sprite": "svg-sprite-generate -d ./images/icons -o ./images/sprite.svg",
+    "pull": "wp migratedb pull https://teamblackstone.wpengine.com I0h/G/WuZOTjEDPrpnvQh1WHAV4JqTqiqa2FvLdO --backup=prefix --preserve-active-plugins"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/blackstonemedia/bsm.git"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ],
+  "author": "Blackstone Media",
+  "license": "ISC",
+  "homepage": "https://www.blackstonemedia.com",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "swiper": "^4.2.6",
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^0.28.11",
+    "cssnano": "^3.10.0",
+    "eslint": "^4.19.1",
+    "eslint-config-google": "^0.9.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "json-loader": "^0.5.7",
+    "less": "^3.0.2",
+    "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^0.4.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.1",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-loader": "^2.1.4",
+    "progress-bar-webpack-plugin": "^1.11.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "vue-loader": "^15.0.5",
+    "vue-style-loader": "^4.1.0",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.1.2",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.2"
+  }
+}

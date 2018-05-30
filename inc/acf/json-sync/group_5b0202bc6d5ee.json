@@ -1,0 +1,136 @@
+{
+    "key": "group_5b0202bc6d5ee",
+    "title": "Template: Flex Content",
+    "fields": [
+        {
+            "key": "field_5b0202bc71564",
+            "label": "Layout",
+            "name": "layout",
+            "type": "flexible_content",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layouts": {
+                "5a972840e7b16": {
+                    "key": "5a972840e7b16",
+                    "name": "editor",
+                    "label": "Editor",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5b0202bc73683",
+                            "label": "Editor",
+                            "name": "editor",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "label-hide",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "tabs": "visual",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "delay": 1
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "5a997d8a8106c": {
+                    "key": "5a997d8a8106c",
+                    "name": "bumpers",
+                    "label": "Bumpers",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5b0202bc73695",
+                            "label": "Bumpers",
+                            "name": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "label-hide",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_5aa2d6d4c6ada"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "5aa1a45ee6bc2": {
+                    "key": "5aa1a45ee6bc2",
+                    "name": "hero",
+                    "label": "Hero",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5b0202bc736b9",
+                            "label": "Hero",
+                            "name": "herotesting",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_5a95c7c41f679"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                }
+            },
+            "button_label": "Add Row",
+            "min": "",
+            "max": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": 0,
+    "description": "",
+    "modified": 1526868090
+}

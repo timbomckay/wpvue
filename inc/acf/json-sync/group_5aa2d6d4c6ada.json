@@ -1,0 +1,55 @@
+{
+    "key": "group_5aa2d6d4c6ada",
+    "title": "Component : Bumpers",
+    "fields": [
+        {
+            "key": "field_5aa2d6d4cbb86",
+            "label": "Bumpers",
+            "name": "bumpers",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "label-hide",
+                "id": ""
+            },
+            "post_type": [
+                "page",
+                "post",
+                "case-studies"
+            ],
+            "taxonomy": [],
+            "filters": [
+                "search",
+                "post_type",
+                "taxonomy"
+            ],
+            "elements": [
+                "featured_image"
+            ],
+            "min": 1,
+            "max": 2,
+            "return_format": "object"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1526858313
+}

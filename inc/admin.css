@@ -1,0 +1,8 @@
+div.mce-fullscreen .mce-flow-layout {
+	text-align: center;
+}
+
+#wp-auth-check-wrap #wp-auth-check {
+  max-height: 31rem;
+  background-color: rgb(243, 255, 255);
+}

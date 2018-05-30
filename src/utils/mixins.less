@@ -1,0 +1,25 @@
+/*------------------------------------*\
+    Less Mixins
+\*------------------------------------*/
+
+/**
+ * Transition Mixin
+ *
+ * Examples :
+ *   .btn {
+ *     .transition; // Applies defaults with or without () -- Not recommended to transition all properties
+ *
+ *     .transition(color); // sets transition-property to color
+ *
+ *     .transition(color, opacity;); // sets transition-property to color, opacity (!important remember the ';' to signify it's the first parameter)
+ *
+ *     .transition(color, 1s); // sets transition-property to color and transition-duration to 1s
+ *   }
+ *
+ */
+
+.transition(@property: all; @duration: 0.2s; @timing: ease-in-out) {
+  transition-property: @property;
+  transition-duration: @duration;
+  transition-timing-function: @timing;
+}

@@ -1,5 +1,5 @@
 {
-  "name": "bsm",
+  "name": "wpvue",
   "version": "1.0.0",
   "description": "Boilerplate WP setup for a Vue based theme.",
   "scripts": {
@@ -14,19 +14,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/blackstonemedia/bsm.git"
+    "url": "git+ssh://git@github.com:timbomckay/wpvue.git"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 10"
   ],
-  "author": "Blackstone Media",
+  "author": "Tim McKay",
   "license": "ISC",
-  "homepage": "https://www.blackstonemedia.com",
+  "homepage": "https://timbomckay.github.io/",
   "dependencies": {
     "axios": "^0.18.0",
-    "swiper": "^4.2.6",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

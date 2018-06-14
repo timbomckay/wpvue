@@ -9,8 +9,7 @@
     "build": "webpack --mode production --env prod --config config/webpack.config.js && npm run themebump",
     "themebump": "sed -i.bak \"s/^Version:.*/Version: $(git log --pretty=\"%h\" -n1 HEAD)/\" ./style.css",
     "svg:optimize": "svgo -f ./images/icons --disable=removeViewBox --enable=removeTitle",
-    "svg:sprite": "svg-sprite-generate -d ./images/icons -o ./images/sprite.svg",
-    "pull": "wp migratedb pull https://teamblackstone.wpengine.com I0h/G/WuZOTjEDPrpnvQh1WHAV4JqTqiqa2FvLdO --backup=prefix --preserve-active-plugins"
+    "svg:sprite": "svg-sprite-generate -d ./images/icons -o ./images/sprite.svg"
   },
   "repository": {
     "type": "git",

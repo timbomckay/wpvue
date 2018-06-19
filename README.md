@@ -9,7 +9,7 @@ There are a handful of Vue based WordPress themes that provide alternative solut
 - Utilizing WordPress Functionality
 - Webpack 4 with single file components
 - Hot Module Replacement for local development (also removes the need for Gulp)
-- Providing custom REST API endpoints
+- Providing [Custom REST API Endpoints](https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/)
 
 ## *Temporarily* Coupled CMS
 WordPress does a lot of things well and I didn't want to completely disassociate the Front-End from the magic of `wp_head()` & `wp_footer` and the menu system. This maintains simple use of [enqueue-scripts](/inc/enqueue-scripts.php), WordPress menu management, popular SEO plugins such as [YOAST](https://yoast.com/wordpress/plugins/seo/) and taking advantage of localized scripts for the initial page.
@@ -20,7 +20,7 @@ Keeping the application *temporarily* coupled will allow the use of these WordPr
 
 ## Ease of Use
 
-There are a couple Vue based starter themes out there (such as ) but I haven't found one that used  I wanted this theme to be easily used on any WordPress platform, no need for a Node server to recreate many of the WordPress functions. At the same time, this theme should be easily altered for use on Node with very little alterations.
+I wanted this theme to be easily used on any WordPress platform, no need for a Node server. At the same time, it should be easily altered for use on Node with very little alteration.
 
 ## Structure
 - **[config](/config)** : Configuration files for webpack, eslint, postcss, etc.
@@ -35,13 +35,16 @@ There are a couple Vue based starter themes out there (such as ) but I haven't f
 
 #### Static Assets
 
-Depending on the amount of them, I'll place assets in the root. There's not a need for an *assets* folder if it only contains an *images* folder. Fonts are another static asset possibly needed in a theme. Once it gets to three it may be a good idea to group in an *assets* or *static* folder.
+Depending on the amount of them, I'll place assets in the root by their type. There's not a need for an *assets* folder if it only contains an *images* folder. Fonts are another static asset possibly needed in a theme. Once it gets to three it may be a good idea to group in an *assets* or *static* folder.
 
-## Set Up
+## Setup
 
-1. Navigate to the theme folder `cd wp-content/themes/bsm`
+### Installation
+
+1. Navigate to the theme folder `cd wp-content/themes/wpvue`
 2. Install node packages: `yarn install` or `npm install`
 3. Run a build script to generate a fresh *dist/* folder
+
 
 ### IMPORTANT!
 In order to automate everything, the names for the following should be consistent:

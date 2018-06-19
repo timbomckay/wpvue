@@ -12,13 +12,15 @@ WordPress does a lot of things well and didn't want to completely disassociate t
 I wanted the theme to be easily used on any WordPress platform, no need for a Node server to recreate many of the WordPress functions. At the same time, this theme should be easily altered for use on Node with very little alterations. Maintaining the structure of the
 
 ## Structure
-- **[config](/tree/master/config)** : Configuration files for webpack, eslint, postcss, etc.
-- **[inc](/tree/master/inc)** : All WordPress scripts referenced in *functions.php*
-- **[src](/tree/master/src)** : Modularized files to be built by webpack, restrict to only compilable files and not static assets
+- **[config](/config)** : Configuration files for webpack, eslint, postcss, etc.
+- **[inc](/inc)** : All WordPress scripts referenced in *functions.php*
+- **[src](/src)** : Modularized files to be built by webpack, restrict to only compilable files and not static assets
 - **functions.php** : Collection of WordPress theme specific hooks, filters and actions imported from the [inc/](/tree/master/inc) folder
 - **index.php** : [WordPress template hierarchy](https://developer.wordpress.org/themes/basics/template-hierarchy/) falls back to *index.php* for all content
 - **header.php** : Site doctype, head, `wp_head()`, opening tags, and theme header
 - **footer.php** : Theme footer, necessary closing tags and `wp_footer()`
+- **404.php** : Skipping *index.php* for
+- **archive-style-guide.php** : Custom template for the [style guide](/src/style-guide)
 
 #### Static Assets
 

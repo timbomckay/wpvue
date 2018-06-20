@@ -32,7 +32,7 @@ module.exports = merge(config, {
   module: {
     rules: [
       {
-        test: /\.less$/,
+        test: /\.scss$/,
         use: [
           'vue-style-loader',
           'css-loader',
@@ -45,7 +45,7 @@ module.exports = merge(config, {
             }
           },
           {
-            loader: 'less-loader',
+            loader: 'scss-loader',
             options: {}
           }
         ]

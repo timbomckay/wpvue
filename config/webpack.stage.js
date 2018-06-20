@@ -8,7 +8,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.less$/,
+        test: /\.scss$/,
         use: [
           'vue-style-loader',
           MiniCssExtractPlugin.loader,
@@ -22,7 +22,7 @@ module.exports = {
             }
           },
           {
-            loader: 'less-loader',
+            loader: 'scss-loader',
             options: {}
           }
         ]

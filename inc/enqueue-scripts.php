@@ -27,8 +27,11 @@ function base_scripts() {
         // $path = 'http://localhost:8080/' . $theme->get('TextDomain') . '/dist'; // this isn't working with HMR for some reason
         $path = 'http://localhost:8080/' . 'dist';
       } else if (!is_dir(get_template_directory() . '/dist')) {
-        // local environment missing dist folder
-        echo '<pre style="background-color:red;padding:1rem;color:white;font-weight:bold;position:fixed;right:1rem;top:1rem;margin:0;">Missing <i>"dist"</i> directory</pre>';
+				// local environment missing dist folder
+				// create alert
+        add_action('wp_footer', function(){
+	        echo '<pre style="background-color:red;padding:1rem;color:white;font-weight:bold;position:fixed;right:1rem;top:1rem;margin:0;">Missing <i>"dist"</i> directory</pre>';
+	      });
       }
     }
 

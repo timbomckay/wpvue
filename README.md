@@ -16,7 +16,7 @@ WordPress does a lot of things well and I didn't want to completely disassociate
 
 Keeping the application *temporarily* coupled will allow the use of these WordPress functions and utilizing the initial database call by providing the queried object(s) in the localized script. This minimizes the REST API calls on the initial load by providing the data that WordPress has already queried. After the initial page load it's essentially a headless application as the rest of the interactions are with the REST API.
 
->*Important* One stipulation is the structure of the queried object does not match the JSON object from the REST API call. Sounds like this is an intentional choice from WordPress but it's on the todo list to deliver this object the same as the REST API.
+>**Important** One stipulation is the structure of the queried object does not match the JSON object from the REST API call. Sounds like this is an intentional choice from WordPress but it's on the todo list to deliver this object the same as the REST API.
 
 ## Ease of Use
 
@@ -94,4 +94,6 @@ When the `build` script is ran it also runs the `themebump` script to update the
 
 - [ ] Consistent data (Localize Script & REST API)
 	> The WordPress PHP object is structured differently than the REST API JSON objects and I need to find a way to keep the consistency so our theme doesn't require a function to check for `id` vs `ID`, or `post_title` vs `title.rendered`
+
+- [ ] Preview post before publish
 - [ ] ...more

@@ -1,65 +1,34 @@
 <?php
+
+/* Import styling for ACF fields */
+require 'styles.php';
+
 /**
- * Register Advanced Custom Fields
+ * Set Up JSON Syncing
  */
 
-if( function_exists('acf_add_local_field_group') ):
+add_filter('acf/settings/save_json', 'base_acf_json_save_point');
 
-  /**
-   * Set Up JSON Syncing
-   */
+function base_acf_json_save_point( $path ) {
+  // update path
+  $path = get_stylesheet_directory() . '/inc/acf/json-sync';
+  // return
+  return $path;
+}
 
-  add_filter('acf/settings/save_json', 'base_acf_json_save_point');
+add_filter('acf/settings/load_json', 'base_acf_json_load_point');
 
-	function base_acf_json_save_point( $path ) {
+function base_acf_json_load_point( $paths ) {
+  // remove original path (optional)
+  unset($paths[0]);
+  // append path
+  $paths[] = get_stylesheet_directory() . '/inc/acf/json-sync';
+  // return
+  return $paths;
+}
 
-	    // update path
-	    $path = get_stylesheet_directory() . '/inc/acf/json-sync';
+/* import google-maps key for ACF */
+// require `google-maps.php`; // uncomment when key is provided
 
-	    // return
-	    return $path;
-
-	}
-
-	add_filter('acf/settings/load_json', 'base_acf_json_load_point');
-
-	function base_acf_json_load_point( $paths ) {
-
-	    // remove original path (optional)
-	    unset($paths[0]);
-
-	    // append path
-	    $paths[] = get_stylesheet_directory() . '/inc/acf/json-sync';
-
-	    // return
-	    return $paths;
-
-	}
-
-
-  /**
-   * ACF Google Map
-   *
-   * It may be necessary to register a Google API key in order to
-   * allow the Google API to load correctly
-   *
-   * @link Google API Key - https://developers.google.com/maps/documentation/javascript/get-api-key
-   *
-   * @link ACF Map - https://www.advancedcustomfields.com/resources/google-map/
-   *
-   */
-
-    function base_acf_init() {
-      acf_update_setting('google_api_key', 'AIzaSyCjrZe1rylwzXJ49QhPfkr9R4DtdlWThao');
-    }
-
-    add_action('acf/init', 'base_acf_init');
-
-  /**
-   * Import ACF Files
-   */
-
-    require 'restapi.php';
-    require 'styles.php';
-
-endif;
+/* Import ACF Specific REST API endpoints */
+require 'restapi.php';

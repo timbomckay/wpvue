@@ -1,10 +1,6 @@
 <?php
 /**
  * Register theme support for languages, menus, post-thumbnails, post-formats, etc.
- *
- * @package WordPress
- * @subpackage Base
- * @since Base 1.0.0
  */
 
 if ( ! function_exists( 'base_setup' ) ) :
@@ -38,21 +34,17 @@ function base_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 
-	add_image_size( 'base-featured-image', 2000, 1200, true );
-
-	add_image_size( 'base-thumbnail-avatar', 100, 100, true );
-
 	/*
 	 * Switch default core markup for search form, comment form, and comments
 	 * to output valid HTML5.
 	 */
-	add_theme_support( 'html5', array(
-		// 'search-form',
-		'comment-form',
-		'comment-list',
-		'gallery',
-		'caption',
-	) );
+	// add_theme_support( 'html5', array(
+	// 	'search-form',
+	// 	'comment-form',
+	// 	'comment-list',
+	// 	'gallery',
+	// 	'caption',
+	// ) );
 
 	/*
 	 * Enable support for Post Formats.
@@ -71,55 +63,13 @@ function base_setup() {
 	// ) );
 
 	// Set up the WordPress core custom background feature.
-	add_theme_support( 'custom-background', apply_filters( 'base_custom_background_args', array(
-		'default-color' => 'ffffff',
-		'default-image' => '',
-	) ) );
-
-	// https://source.unsplash.com/category/nature/1600x900
+	// add_theme_support( 'custom-background', apply_filters( 'base_custom_background_args', array(
+	// 	'default-color' => 'ffffff',
+	// 	'default-image' => '', // https://source.unsplash.com/category/nature/1600x900
+	// ) ) );
 
 }
 endif;
 add_action( 'after_setup_theme', 'base_setup' );
-
-
-/**
- * Adds custom classes to the array of body classes.
- *
- * @since Twenty Sixteen 1.0
- *
- * @param array $classes Classes for the body element.
- * @return array (Maybe) filtered body classes.
- */
-
-function base_body_classes( $classes ) {
-	// Adds a class of custom-background-image to sites with a custom background image.
-	if ( get_background_image() ) {
-		$classes[] = 'custom-background-image';
-	}
-
-	// Adds a class of group-blog to sites with more than 1 published author.
-	if ( is_multi_author() ) {
-		$classes[] = 'group-blog';
-	}
-
-	// Adds a class of no-sidebar to sites without active sidebar.
-	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
-		$classes[] = 'no-sidebar';
-	}
-
-	// Adds a class of hfeed to non-singular pages.
-	if ( ! is_singular() ) {
-		$classes[] = 'hfeed';
-	}
-
-	// Adds a class of group-blog to blogs with more than 1 published author.
-	if ( is_multi_author() ) {
-		$classes[] = 'group-blog';
-	}
-
-	return $classes;
-}
-add_filter( 'body_class', 'base_body_classes' );
 
 ?>

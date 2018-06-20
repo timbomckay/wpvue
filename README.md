@@ -84,11 +84,7 @@ With Webpack Dev Server being in Node and WordPress being PHP, HMR has been only
 
 ## Cache-Busting
 
-The `themebump` script
-
-```
-To Be Continued
-```
+When the `build` script is ran it also runs the `themebump` script to update the *style.css* `Version` number. Semantic version would be preferred but my deployment method wouldn't maintain the file for the next build, it'd always bump from `1.0.0`. In the meantime, the current solution updates the version number with the current git commit number. Then the [enqueue-scripts](/inc/enqueue-scripts.php) file pulls in the theme file and appends the version number to the enqueued files.
 
 ## Road Map
 
@@ -99,9 +95,3 @@ To Be Continued
 - [ ] Consistent data (Localize Script & REST API)
 	> The WordPress PHP object is structured differently than the REST API JSON objects and I need to find a way to keep the consistency so our theme doesn't require a function to check for `id` vs `ID`, or `post_title` vs `title.rendered`
 - [ ] ...more
-
-## Localized Scripts
-
-```
-To Be Continued
-```

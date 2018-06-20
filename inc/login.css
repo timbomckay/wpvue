@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(243, 255, 255);
+  background-color: #fafafa;
   position: relative;
   height: 100vh;
 }
@@ -23,15 +23,15 @@ body *:after {
 }
 .login h1 a {
   width: 100%;
-  height: 2.5rem;
-  background-image: url('../images/branding/logo--color.svg');
+  height: 7.5rem;
+  background-image: url('../images/branding/logo.png');
   background-size: contain;
 }
 .login form {
   padding: 2rem;
   position: relative !important;
   box-shadow: none;
-  border: 1px solid rgb(218, 230, 230);
+  border: 4px solid rgb(240, 240, 240);
 }
 .login label {
   font-weight: 300;
@@ -42,23 +42,25 @@ body *:after {
   border-radius: 0;
   border: 0;
   float: none;
-  font-weight: bold;
   line-height: 2.5rem;
   height: auto;
   text-shadow: none;
-  color: rgb(45, 45, 45);
-  background-color: rgb(254, 217, 2);
+  color: white;
+  background-color: #4fc08d;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
   transition-property: background-color, box-shadow, transform;
   box-shadow: none;
 }
 .login input#wp-submit:hover {
-  background-color: rgb(255,243,28);
+  background-color: #364761;
   transform: scale(1.02, 1.02);
-  box-shadow: 3px 3px 30px 3px rgba(0,1,95,0.2);
+  box-shadow: 3px 3px 30px 3px rgba(80,184,122,0.2);
 }
 .login #nav { text-align: center; }
-.login #nav a { color: rgb(40, 52, 175); }
-.login #nav a:hover { color: rgb(15, 27, 150); }
+.login #nav a { color: #364761; }
+.login #nav a:hover { color: #4fc08d; }
 .login #backtoblog {
   display: none;
 }

@@ -2,7 +2,7 @@
 
 This is a WordPress theme utilizing the power of [VueJS](https://vuejs.org/) and the [WordPress REST API](https://developer.wordpress.org/rest-api/).
 
-## What makes this different?
+## What makes this theme different?
 
 There are a handful of Vue based WordPress themes that provide alternative solutions but they seem to skip most of WordPress' core functionality, save for enqueue scripts.
 
@@ -22,6 +22,8 @@ Keeping the application *temporarily* coupled will allow the use of these WordPr
 
 I wanted this theme to be easily used on any WordPress platform, no need for a Node server. At the same time, it should be easily altered for use on Node with very little alteration.
 
+---
+
 ## Structure
 - **[config](/config)** : Configuration files for webpack, eslint, postcss, etc.
 - **[inc](/inc)** : All WordPress scripts referenced in *functions.php*
@@ -33,9 +35,19 @@ I wanted this theme to be easily used on any WordPress platform, no need for a N
 - **404.php** : Skipping *index.php* for missing content, some applications may need this to be removed or provide a [rewrite rule](https://developer.wordpress.org/reference/functions/add_rewrite_rule/) to bypass WordPress
 - **archive-style-guide.php** : Custom template for the [style guide](/src/style-guide)
 
-#### Static Assets
+### Static Assets
 
 Depending on the amount of them, I'll place assets in the root by their type. There's not a need for an *assets* folder if it only contains an *images* folder. Fonts are another static asset possibly needed in a theme. Once it gets to three it may be a good idea to group in an *assets* or *static* folder.
+
+### Integrations
+- [VueJS](https://vuejs.org/)
+- [VueRouter](https://router.vuejs.org/)
+- [Vuex](https://vuex.vuejs.org/)
+- [Webpack](https://webpack.js.org/) `v4`
+- [Axios](https://github.com/axios/axios) for API requests (replace with [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) if IE isn't a concern)
+- [SCSS](https://sass-lang.com/) as the preprocessor of choice
+
+---
 
 ## Setup
 
@@ -55,15 +67,7 @@ In order to automate everything, the names for the following should be consisten
 - `Text Domain` in *style.css*
 - `name` in *package.json*
 
-### Integrations
-- [VueJS](https://vuejs.org/)
-- [VueRouter](https://router.vuejs.org/)
-- [Vuex](https://vuex.vuejs.org/)
-- [Webpack](https://webpack.js.org/) `v4`
-- [Bootstrap 4 Reboot](https://getbootstrap.com/docs/4.1/content/reboot/)
-- [Bootstrap 4 Grid](https://getbootstrap.com/docs/4.1/layout/grid/)
-- [Axios](https://github.com/axios/axios) for API requests (replace with [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) if IE isn't a concern)
-- [SCSS](https://sass-lang.com/) as the preprocessor of choice, easily converted to less
+---
 
 ## Hot Module Replacement (HMR)
 
@@ -78,9 +82,13 @@ With Webpack Dev Server being in Node and WordPress being PHP, HMR has been only
 
 >I use [Valet](https://laravel.com/docs/master/valet) for my local development so I can easily switch between projects or quickly hop on a hotfix when needed without shutting down my main project.
 
+---
+
 ## Cache-Busting
 
 When the `build` script is ran it also runs the `themebump` script to update the *style.css* `Version` number. Semantic version would be preferred but my deployment method wouldn't maintain the file for the next build, it'd always bump from `1.0.0`. In the meantime, the current solution updates the version number with the current git commit number. Then the [enqueue-scripts](/inc/enqueue-scripts.php) file pulls in the theme file and appends the version number to the enqueued files.
+
+---
 
 ## Road Map
 
@@ -92,4 +100,3 @@ When the `build` script is ran it also runs the `themebump` script to update the
 	> The WordPress PHP object is structured differently than the REST API JSON objects and I need to find a way to keep the consistency so our theme doesn't require a function to check for `id` vs `ID`, or `post_title` vs `title.rendered`
 
 - [ ] Preview post before publish
-- [ ] ...more

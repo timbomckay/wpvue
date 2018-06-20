@@ -65,12 +65,12 @@ export default {
         href: '/case-studies/example'
       },
       logo: {
-        href: '/wp-content/themes/bsm/images/branding/logo.svg',
+        href: '/wp-content/themes/wpvue/images/branding/logo.svg',
         alt: ''
       },
       background: 'https://placeimg.com/1000/400',
       floatImage: {
-        href: '/wp-content/themes/bsm/images/style-guide/mid-ic-pneumatic.png',
+        href: '/wp-content/themes/wpvue/images/style-guide/mid-ic-pneumatic.png',
         alt: 'Rando Image',
         offset: {
           bottom: 15,

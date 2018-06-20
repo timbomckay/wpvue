@@ -1,6 +1,6 @@
 <template>
   <main class="slim-container">
-    <bsm-nav :cta="cta" :links="links" :logo="logo"></bsm-nav>
+    <wpvue-nav :cta="cta" :links="links" :logo="logo"></wpvue-nav>
     <h2 style="margin-top: 7.5rem">Nav</h2>
     <section>
     <p>This nav has a transparent mode in which the text becomes white and the background transparent.
@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import bsmNav from '../../components/bsm-nav.vue';
+import wpvueNav from '../../components/wpvue-nav.vue';
 
 export default {
   name: 'nav',
   components: {
-    'bsm-nav': bsmNav
+    'wpvue-nav': wpvueNav
   },
   data() {
     return {
@@ -38,7 +38,7 @@ export default {
         }
       ],
       logo: {
-        src: '/wp-content/themes/bsm/images/branding/logo.svg'
+        src: '/wp-content/themes/wpvue/images/branding/logo.svg'
       }
     }
   },

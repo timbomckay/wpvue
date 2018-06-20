@@ -39,7 +39,7 @@ export default {
               title: 'Sample Job Title',
               cta_text: 'Meet Sample',
               page_link: {
-                link:"http://www.bsm.localhost/carousel"
+                link:"http://www.wpvue.localhost/carousel"
               },
               hover_color: 'aqua'
             },
@@ -54,7 +54,7 @@ export default {
               title: 'Sample Job Title',
               cta_text: 'Meet Johnny',
               page_link: {
-                link:"http://www.bsm.localhost/carousel"
+                link:"http://www.wpvue.localhost/carousel"
               },
               hover_color: 'lightbulb'
             },
@@ -69,7 +69,7 @@ export default {
               title: 'Sample Job Title',
               cta_text: 'Meet Freddy',
               page_link: {
-                link:"http://www.bsm.localhost/carousel"
+                link:"http://www.wpvue.localhost/carousel"
               },
               hover_color: 'aqua'
             },
@@ -84,7 +84,7 @@ export default {
               title: 'Sample Job Title',
               cta_text: 'Meet Susie',
               page_link: {
-                link:"http://www.bsm.localhost/carousel"
+                link:"http://www.wpvue.localhost/carousel"
               },
               hover_color: 'lightbulb'
             }
@@ -101,7 +101,7 @@ export default {
               title: 'Sample Job Title',
               cta_text: 'Meet Sample',
               page_link: {
-                link:"http://www.bsm.localhost/carousel"
+                link:"http://www.wpvue.localhost/carousel"
               },
               hover_color: 'aqua'
             },
@@ -116,7 +116,7 @@ export default {
               title: 'Sample Job Title',
               cta_text: 'Meet Johnny',
               page_link: {
-                link:"http://www.bsm.localhost/carousel"
+                link:"http://www.wpvue.localhost/carousel"
               },
               hover_color: 'lightbulb'
             }

@@ -58,34 +58,10 @@ function custom_posts() {
     'has_archive' => true,
     'exclude_from_search' => true
   ));
-  new_post_type('Case Studies', 'Case Study', 'case-studies', 'dashicons-analytics');
-  new_post_type('Team Members', 'Team Member', 'team', 'dashicons-nametag');
-  new_post_type('Testimonials', 'Testimonials', 'testimonials', 'dashicons-testimonial');
 
 }
 
 add_action( 'init', 'custom_posts' );
-
-register_taxonomy( 'service-categories',
-	array('case-studies', 'page', 'post'),
-	array('hierarchical' => true,
-		'labels' => array(
-			'name' => __( 'Service Categories', 'wpvue' ),
-			'singular_name' => __( 'Service Category', 'wpvue' ),
-			'search_items' =>  __( 'Search Service Categories', 'wpvue' ),
-			'all_items' => __( 'All Service Categories', 'wpvue' ),
-			'parent_item' => __( 'Parent Service Category', 'wpvue' ),
-			'parent_item_colon' => __( 'Parent Service Category:', 'wpvue' ),
-			'edit_item' => __( 'Edit Service Category', 'wpvue' ),
-			'update_item' => __( 'Update Service Category', 'wpvue' ),
-			'add_new_item' => __( 'Add New Service Category', 'wpvue' ),
-			'new_item_name' => __( 'New Service Category Name', 'wpvue' )
-		),
-		'show_admin_column' => true,
-    'show_tagcloud' => false,
-		'show_in_rest' => true
-	)
-);
 
 add_action( 'init', function() {
   // redirect all style-guide urls to archive tempalte, vue router will take over from there
@@ -95,18 +71,18 @@ add_action( 'init', function() {
 /*
   Add Custom Post Types to REST API
  */
-function add_cpt_rest() {
-    global $wp_post_types;
-
-		$cptPosts = ['case-studies', 'team', 'testimonials'];
-
-		foreach ($cptPosts as $posttype) {
-			$wp_post_types[$posttype]->show_in_rest = true;
-	    $wp_post_types[$posttype]->rest_base = $posttype;
-	    $wp_post_types[$posttype]->rest_controller_class = 'WP_REST_Posts_Controller';
-		}
-
-}
-add_action( 'init', 'add_cpt_rest', 30 );
+// function add_cpt_rest() {
+//     global $wp_post_types;
+//
+// 		$cptPosts = ['case-studies', 'team', 'testimonials'];
+//
+// 		foreach ($cptPosts as $posttype) {
+// 			$wp_post_types[$posttype]->show_in_rest = true;
+// 	    $wp_post_types[$posttype]->rest_base = $posttype;
+// 	    $wp_post_types[$posttype]->rest_controller_class = 'WP_REST_Posts_Controller';
+// 		}
+//
+// }
+// add_action( 'init', 'add_cpt_rest', 30 );
 
 ?>

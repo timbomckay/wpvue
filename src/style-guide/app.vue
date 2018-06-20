@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 @import "../utils/variables.less";
 
 .style-guide {

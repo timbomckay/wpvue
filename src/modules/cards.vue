@@ -102,7 +102,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 @import "../utils/variables.less";
 @import "../utils/mixins.less";
 @import "../utils/breakpoints.less";
@@ -153,19 +153,19 @@ export default {
         }
       }
       .card__content.lightbulb{
-        -webkit-box-shadow: -10px 10px 0px 0px @color-lightbulb;
-        -moz-box-shadow: -10px 10px 0px 0px @color-lightbulb;
-        box-shadow: -10px 10px 0px 0px @color-lightbulb;
+        -webkit-box-shadow: -10px 10px 0px 0px $color-lightbulb;
+        -moz-box-shadow: -10px 10px 0px 0px $color-lightbulb;
+        box-shadow: -10px 10px 0px 0px $color-lightbulb;
         .cta:before{
-          background-color: @color-lightbulb;
+          background-color: $color-lightbulb;
         }
       }
       .card__content.aqua{
-        -webkit-box-shadow: -10px 10px 0px 0px @color-aqua;
-        -moz-box-shadow: -10px 10px 0px 0px @color-aqua;
-        box-shadow: -10px 10px 0px 0px @color-aqua;
+        -webkit-box-shadow: -10px 10px 0px 0px $color-aqua;
+        -moz-box-shadow: -10px 10px 0px 0px $color-aqua;
+        box-shadow: -10px 10px 0px 0px $color-aqua;
         .cta:before{
-          background-color: @color-aqua;
+          background-color: $color-aqua;
         }
       }
       .card__content{
@@ -202,7 +202,7 @@ export default {
         width: 100%;
         position: relative;
         bottom: -1rem;
-        color: @color-blackout;
+        color: $color-blackout;
         .transition;
       }
       a{
@@ -230,7 +230,7 @@ export default {
   .nav-wrapper{
     position: relative;
     [role='button'], button:hover:not(.btn-disabled), [role='button']:hover:not(.btn-disabled), .btn:hover:not(.btn-disabled), [type='submit']:hover:not(.btn-disabled), button:focus:not(.btn-disabled), [role='button']:focus:not(.btn-disabled), .btn:focus:not(.btn-disabled), [type='submit']:focus:not(.btn-disabled){
-      color: @color-cobalt;
+      color: $color-primary;
     }
     .swiper-button-prev {
       left: -100px;
@@ -243,7 +243,7 @@ export default {
     }
     .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets{
       .swiper-pagination-bullet-active:after{
-        background: @color-cobalt;
+        background: $color-primary;
       }
       // & li{
       //   display: inline-flex;
@@ -263,7 +263,7 @@ export default {
       //   }
       // }
       & li:after {
-        border: 4px solid @color-cobalt;
+        border: 4px solid $color-primary;
       }
     }
   }

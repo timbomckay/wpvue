@@ -115,7 +115,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
   @import "../utils/variables.less";
   @import "../utils/breakpoints.less";
   .swiper-container {
@@ -145,14 +145,14 @@ export default {
           height: 100%;
         }
         [role='button']{
-          color: @color-cobalt;
+          color: $color-primary;
         }
         .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets{
           position:relative;
         }
         .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets{
           .swiper-pagination-bullet-active:after{
-            background: @color-cobalt;
+            background: $color-primary;
           }
           // & li{
           //   display: inline-flex;
@@ -172,17 +172,17 @@ export default {
           //   }
           // }
           & li:after {
-            border: 4px solid @color-cobalt;
+            border: 4px solid $color-primary;
           }
         }
       }
       &--process{
         [role='button']{
-          color: @color-cobalt;
+          color: $color-primary;
         }
         .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets{
           .swiper-pagination-bullet-active:after{
-            background: @color-cobalt;
+            background: $color-primary;
           }
           & li{
             display: inline-flex;
@@ -202,7 +202,7 @@ export default {
             }
           }
           & li:after {
-            border: 4px solid @color-cobalt;
+            border: 4px solid $color-primary;
           }
         }
       }

@@ -21,7 +21,7 @@ html {
 
 .container {
   width: 100%;
-  max-width: @max-width;
+  max-width: $max-width;
   padding-right: 1rem;
   padding-left: 1rem;
   margin-right: auto;

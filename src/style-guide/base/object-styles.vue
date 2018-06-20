@@ -9,7 +9,7 @@
     </div>
 
     <h3>Overlays</h3>
-    <p>All of these boxes have a <code>background-color</code> of <code class="text-cobalt-lighter">@color-cobalt-lighter</code></p>
+    <p>All of these boxes have a <code>background-color</code> of <code class="text-cobalt-lighter">$color-primary-lighter</code></p>
     <div class="overlayboxes">
       <div class="overlaybox"><code>.overlay-15</code></div>
       <div class="overlaybox"><code>.overlay-25</code></div>
@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 @import '../../utils/variables';
 @import '../../utils/helper-other';
 
@@ -47,7 +47,7 @@ export default {
     align-items: center;
 
     &:first-child {
-      background-color: @color-cobalt;
+      background-color: $color-primary;
       code { color: #fff }
       .shadow-1;
       transition-property: box-shadow;
@@ -56,7 +56,7 @@ export default {
     }
 
     &:last-child {
-      background-color: @color-lightbulb;
+      background-color: $color-lightbulb;
       .shadow-2;
     }
   }
@@ -66,7 +66,7 @@ export default {
     height: 250px;
     margin-bottom: 1rem;
     text-align: center;
-    background-color: @color-cobalt-lighter;
+    background-color: $color-primary-lighter;
     position: relative;
     display: flex;
     justify-content: center;

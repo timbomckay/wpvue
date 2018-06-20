@@ -69,6 +69,6 @@ import baseInput from '../../elements/base-input.vue';
     }
   };
 </script>
-<style lang="less">
+<style lang="scss">
 
 </style>

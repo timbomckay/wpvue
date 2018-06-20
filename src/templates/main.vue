@@ -13,7 +13,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .vuestyle {
   display: grid;
   transition: all .5s;

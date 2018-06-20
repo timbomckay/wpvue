@@ -44,7 +44,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 @import "../utils/variables.less";
 @import "../utils/mixins.less";
 @import "../utils/breakpoints.less";
@@ -55,7 +55,7 @@ export default {
     background-size: cover;
     text-align: center;
     color: #fff;
-    box-shadow: -1.625rem -1.625rem 0px 0px @color-cobalt-lighter;
+    box-shadow: -1.625rem -1.625rem 0px 0px $color-primary-lighter;
     h2 { margin: 2em auto }
     &__wrap {
       background-color: white;

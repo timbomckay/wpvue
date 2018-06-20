@@ -99,7 +99,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
   .case-study__toggle-label {
     display: block;
     font-size: .875rem;

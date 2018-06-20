@@ -67,7 +67,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 @import "../utils/variables.less";
 
 .styleguide-nav {
@@ -95,7 +95,7 @@ export default {
   &:before {
     display: block;
     content: '';
-    background-color: @color-primary;
+    background-color: $color-primary;
     top: 0;
     left: 0;
     position: absolute;

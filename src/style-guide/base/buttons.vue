@@ -115,7 +115,7 @@
         name: 'sg-buttons'
     };
 </script>
-<style lang="less">
+<style lang="scss">
   .row + .row {
     margin-top: 1rem;
   }

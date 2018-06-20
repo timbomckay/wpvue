@@ -1,6 +1,16 @@
 /*------------------------------------*\
-    Less Mixins
+    SCSS Mixins
 \*------------------------------------*/
+
+/**
+ * Strip-Units function
+ * Removes the unit of measurement from the number to be used as an integer.
+ * Example: 14px => 14
+ */
+
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
 
 /**
  * Transition Mixin
@@ -18,8 +28,8 @@
  *
  */
 
-.transition(@property: all; @duration: 0.2s; @timing: ease-in-out) {
-  transition-property: @property;
-  transition-duration: @duration;
-  transition-timing-function: @timing;
-}
+// .transition(@property: all; @duration: 0.2s; @timing: ease-in-out) {
+//   transition-property: @property;
+//   transition-duration: @duration;
+//   transition-timing-function: @timing;
+// }

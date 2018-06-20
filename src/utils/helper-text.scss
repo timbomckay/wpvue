@@ -1,0 +1,42 @@
+/*------------------------------------*\
+    TEXT HELPERS
+\*------------------------------------*/
+
+// Sizes
+
+.fs-xxl { font-size: 3rem; } // h1
+.fs-xl { font-size: 2.25rem; } // h2
+.fs-l { font-size: 1.5rem; } // h3
+.fs-md { font-size: 1.25rem; } // h4
+
+// Alignment
+
+.text-left { text-align: left !important; }
+.text-center { text-align: center !important; }
+.text-right { text-align: right !important; }
+.text-justify { text-align: justify !important; }
+.text-nowrap { white-space: nowrap !important; }
+
+// Transformation
+
+.text-lowercase { text-transform: lowercase !important; }
+.text-uppercase { text-transform: uppercase !important; }
+.text-capitalize { text-transform: capitalize !important; }
+
+// Weight and italics
+
+.fw-normal { font-weight: normal !important; }
+.fw-bold { font-weight: bold !important; }
+.italic { font-style: italic !important; }
+
+// Text Colors
+
+.text-primary {color: $color-primary;}
+.text-primary-light {color: $color-primary-light}
+.text-primary-dark {color: $color-primary-dark}
+.text-secondary {color: $color-secondary;}
+.text-secondary-light {color: $color-secondary-light}
+.text-secondary-dark {color: $color-secondary-dark}
+.text-tertiary {color: $color-tertiary;}
+.text-tertiary-light {color: $color-tertiary-light}
+.text-tertiary-dark {color: $color-tertiary-dark}

@@ -1,0 +1,178 @@
+/*------------------------------------*\
+    TYPOGRAPHY
+\*------------------------------------*/
+
+/*
+ * Dynamic REM size
+ *
+ * This calc() algorithm provides a more accurate calculation of font-sizes
+ * between breakpoints. Useful for article or marketing based projects that
+ * utilize screen real-estate for varying font-sizes, as opposed to something
+ * like a dashboard that's most likely 16px on all breakpoints.
+ *
+ * Example Output:
+ * html { font-size: calc((100vw - 600px) / 640 * 3 + 16px); }
+ * @media (max-width: 600px) {
+ *   html {font-size: 16px; }
+ * }
+ * @media (min-width: 1240px) {
+ *   html {font-size: 19px; }
+ * }
+ */
+
+html {
+	$min-fs : 15px; // Minimum Font Size
+	$max-fs : 20px; // Maximum Font Size
+	$min-vw : 600px; // Minimum Window width
+	$max-vw : 1240px; // Maximum Window width
+
+	font-size: calc((100vw - #{$min-vw}) / #{strip-units($max-vw - $min-vw)} * #{strip-units($max-fs - $min-fs)} + #{$min-fs});
+  @media (max-width: $min-vw) { font-size: $min-fs; }
+  @media (min-width: $max-vw) { font-size: $max-fs; }
+}
+
+body {
+  line-height: 1.75;
+  letter-spacing: 0.01875em;
+  color: $color-text;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+	background-color: $color-primary-lighter;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6, .jumbo,
+p, ul, ol, li {
+	 &:first-child { margin-top: 0; }
+   &:last-child { margin-bottom: 0; }
+}
+
+// All header fonts
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6, .jumbo {
+	line-height: 1.25em;
+	margin-top: 1.25em;
+	margin-bottom: .66em;
+}
+
+.h1, .h2, .h3, .h4, .h6, .jumbo {
+  font-weight: bold;
+	display: block;
+}
+
+.jumbo {
+  font-size: 5rem;
+}
+h1, .h1 {
+  font-size: 3rem;
+  letter-spacing: 0.01041666667em;
+}
+h2, .h2 {
+  font-size: 2.25rem;
+  letter-spacing: 0.03125rem;
+}
+h3, .h3 {
+  font-size: 1.5rem;
+}
+h4, .h4 {
+  font-size: 1.25rem;
+}
+h5, .h5 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: normal;
+  letter-spacing: 0.09375em
+}
+h6, .h6 {
+  font-size: 1rem;
+  letter-spacing: 0.03125em;
+}
+
+p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+a, [role="link"] {
+  font-weight: bold;
+  color: $color-primary;
+  cursor: pointer;
+  text-decoration: none;
+
+  &.inherit {
+    &:not(:hover) {
+      color: inherit;
+    }
+  }
+
+  &:hover,
+  &:focus {
+    color: $link-hover;
+    outline: none;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    display: inline-block;
+  }
+
+}
+
+ul, ol {
+
+  li {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    position: relative;
+  }
+}
+
+code {
+  font-size: .875rem;
+  font-weight: bold;
+  // &:not(:first-child){margin-left: .875rem;}
+  background-color: fade($link-color, 7.5);
+  padding: 0.166em 0.333em;
+  border-radius: 3px;
+  text-transform: none;
+
+	p & {
+		margin-left: 0;
+	}
+}
+
+blockquote {
+	position: relative;
+	padding: 2rem;
+	font-size: 1.25rem;
+	line-height: 1.4;
+  margin-bottom: 0;
+	&:before {
+		content: "\0201C";
+		font-family: sans-serif;
+		position: absolute;
+		font-size: 4rem;
+		left: 0rem;
+		top: 0;
+		color: $color-primary;
+	}
+	&:after {
+		content: attr(cite);
+		display: block;
+		font-weight: 700;
+		margin-top: 1rem;
+	}
+}
+
+hr {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  border-bottom: 0;
+  border-color: transparent;
+  background-color: whitesmoke;
+}

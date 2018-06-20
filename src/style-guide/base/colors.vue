@@ -5,28 +5,28 @@
 
     <p>
       The color variables are:
-      <code>@color-lightbulb-darker</code> ,
-      <code>@color-lightbulb-dark</code> ,
-      <code>@color-lightbulb,</code> ,
-      <code>@color-lightbulb-light</code>,
-      <code>@color-lightbulb-lighter</code>,
-      <code>@color-cobalt-darker</code>,
-      <code>@color-cobalt-dark</code>,
-      <code>@color-cobalt</code>,
-      <code>@color-cobalt-light</code>,
-      <code>@color-cobalt-lighter</code>,
-      <code>@color-aqua-darker</code>,
-      <code>@color-aqua-dark</code>,
-      <code>@color-aqua</code>,
-      <code>@color-aqua-light</code>,
-      <code>@color-aqua-lighter</code>
-      <code>@color-icy-darker</code>
-      <code>@color-icy-dark</code>,
-      <code>@color-icy</code>,
-      <code>@color-blackout-dark</code>,
-      <code>@color-blackout</code>,
-      <code>@color-blackout-light</code>,
-      <code>@color-blackout-lighter</code>
+      <code>$color-lightbulb-darker</code> ,
+      <code>$color-lightbulb-dark</code> ,
+      <code>$color-lightbulb,</code> ,
+      <code>$color-lightbulb-light</code>,
+      <code>$color-lightbulb-lighter</code>,
+      <code>$color-primary-darker</code>,
+      <code>$color-primary-dark</code>,
+      <code>$color-primary</code>,
+      <code>$color-primary-light</code>,
+      <code>$color-primary-lighter</code>,
+      <code>$color-aqua-darker</code>,
+      <code>$color-aqua-dark</code>,
+      <code>$color-aqua</code>,
+      <code>$color-aqua-light</code>,
+      <code>$color-aqua-lighter</code>
+      <code>$color-icy-darker</code>
+      <code>$color-icy-dark</code>,
+      <code>$color-icy</code>,
+      <code>$color-blackout-dark</code>,
+      <code>$color-blackout</code>,
+      <code>$color-blackout-light</code>,
+      <code>$color-blackout-lighter</code>
     </p>
     <section>
       <div class="color-boxes">
@@ -94,7 +94,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 
   .color-boxes {
     display: flex;

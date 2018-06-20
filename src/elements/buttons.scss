@@ -2,7 +2,7 @@ button,
 [role='button'],
 .btn,
 [type='submit'] {
-    background-color: @color-cobalt;
+    background-color: $color-primary;
     border: 0px;
     box-shadow: none;
     color: #ffffff;
@@ -21,45 +21,15 @@ button,
     .transition(all);
 
     &:hover:not(.btn-disabled),&:focus:not(.btn-disabled) {
-      background-color: @color-cobalt-light;
+      background-color: $color-primary-light;
       color: #ffffff;
       outline: 0px;
       transform: translate3d(0, 0, 0) scale(1.02);
-      .shadow-1;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.2);
     }
 }
 
 .btn-sm {
     font-size: 1.125rem;
     padding: 0.55em 2.95em;
-}
-
-.btn-secondary {
-  background-color: @color-lightbulb;
-  color: @color-blackout; //design calls for rgb(40,40,40)
-
-  &:hover:not(.btn-disabled),&:focus:not(.btn-disabled) {
-    background-color: @color-lightbulb-light;
-    color: @color-blackout;
-  }
-}
-
-.btn-disabled {
-  background-color: @color-blackout-lighter;
-  cursor: default;
-
-  &:hover {
-    color: #ffffff;
-  }
-}
-
-.btn-icon {
-  font-size: 25px;
-  line-height: 0px;
-  min-width: 50px;
-  padding: 0.5em;
-}
-
-.btn-icon input[value="submit"] {
-  display: none;
 }

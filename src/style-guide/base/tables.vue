@@ -45,5 +45,5 @@
         name: 'sg-buttons'
     };
 </script>
-<style lang="less">
+<style lang="scss">
 </style>

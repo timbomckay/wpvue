@@ -6,7 +6,7 @@ This is a WordPress theme utilizing the power of [VueJS](https://vuejs.org/) and
 
 There are a handful of Vue based WordPress themes that provide alternative solutions but they seem to skip most of WordPress' core functionality, save for enqueue scripts.
 
-- Utilizing WordPress Functionality
+- Utilizes WordPress Functionality
 - Webpack 4 with single file components
 - Hot Module Replacement for local development (also removes the need for Gulp)
 - Providing [Custom REST API Endpoints](https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/)
@@ -14,7 +14,7 @@ There are a handful of Vue based WordPress themes that provide alternative solut
 ## *Temporarily* Coupled CMS
 WordPress does a lot of things well and I didn't want to completely disassociate the Front-End from the magic of `wp_head()` & `wp_footer` and the menu system. This maintains simple use of [enqueue-scripts](/inc/enqueue-scripts.php), WordPress menu management, popular SEO plugins such as [YOAST](https://yoast.com/wordpress/plugins/seo/) and taking advantage of localized scripts for the initial page.
 
-Keeping the application *temporarily* coupled will allow the use of these WordPress functions and utilizing the initial database call by providing the queried object(s) in the localized script. This minimizes the REST API calls on the initial load by providing the data that WordPress has already queried.
+Keeping the application *temporarily* coupled will allow the use of these WordPress functions and utilizing the initial database call by providing the queried object(s) in the localized script. This minimizes the REST API calls on the initial load by providing the data that WordPress has already queried. After the initial page load it's essentially a headless application as the rest of the interactions are with the REST API.
 
 >*Important* One stipulation is the structure of the queried object does not match the JSON object from the REST API call. Sounds like this is an intentional choice from WordPress but it's on the todo list to deliver this object the same as the REST API.
 
@@ -63,7 +63,7 @@ In order to automate everything, the names for the following should be consisten
 - [VueJS](https://vuejs.org/)
 - [VueRouter](https://router.vuejs.org/)
 - [Vuex](https://vuex.vuejs.org/)
-- [Webpack](https://webpack.js.org/) v4
+- [Webpack](https://webpack.js.org/) `v4`
 - [Bootstrap 4 Reboot](https://getbootstrap.com/docs/4.1/content/reboot/)
 - [Bootstrap 4 Grid](https://getbootstrap.com/docs/4.1/layout/grid/)
 - [Axios](https://github.com/axios/axios) for API requests (replace with [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) if IE isn't a concern)
@@ -96,7 +96,7 @@ To Be Continued
 
 :white_check_mark: ~~[Hot Module Replacement](#hot-module-replacement-hmr)~~
 
-- [ ] Consistent data ([Localize Script](#localized-scripts) & REST API)
+- [ ] Consistent data (Localize Script & REST API)
 	> The WordPress PHP object is structured differently than the REST API JSON objects and I need to find a way to keep the consistency so our theme doesn't require a function to check for `id` vs `ID`, or `post_title` vs `title.rendered`
 - [ ] ...more
 

@@ -44,20 +44,16 @@ Depending on the amount of them, I'll place assets in the root by their type. Th
 1. Navigate to the theme folder `cd wp-content/themes/wpvue`
 2. Install node packages: `yarn install` or `npm install`
 3. Run a build script to generate a fresh *dist/* folder
-
+   * `dev` : starts webpack-dev-server with [HMR](#hot-module-replacement-hmr)
+   * `dev:watch` : watches the *src/* folder for changes to trigger a new build
+   * `staging` : builds non-minimized files for debugging, keeps vue-debug & source-mapping enabled
+   * `build` : minimizes code and updates the version number in *style.css* for [cache-busting](#cache-busting)
 
 ### IMPORTANT!
 In order to automate everything, the names for the following should be consistent:
 - Theme folder name
 - `Text Domain` in *style.css*
 - `name` in *package.json*
-
-### Build Options
-
-* `dev` : starts webpack-dev-server with [HMR](#hot-module-replacement-hmr)
-* `dev:watch` : watches the *src/* folder for changes to trigger a new build
-* `staging` : builds non-minimized files for debugging, keeps vue-debug & source-mapping enabled
-* `build` : minimizes code and updates the version number in *style.css* for [cache-busting](#cache-busting)
 
 ### Integrations
 - [VueJS](https://vuejs.org/)

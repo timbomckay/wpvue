@@ -33,23 +33,13 @@ const navItems = [
       {name: 'Typography', slug: 'typography'},
       {name: 'Icons', slug: 'icons'},
       {name: 'Buttons', slug: 'buttons'},
-      {name: 'Forms', slug: 'forms'},
       {name: 'Links', slug: 'links'}
-    ],
-  },
-  {
-    name: 'Modules',
-    links: [
-      {name: 'Cards', slug: 'cards'}
     ],
   },
   {
     name: 'Components',
     links: [
-      {name: 'Hero', slug: 'hero'},
-      {name: 'Carousel', slug: 'carousel'},
-      {name: 'Footer', slug: 'footer'},
-      {name: 'Nav', slug: 'wpvue-nav'}
+      {name: 'Sample', slug: 'sample'}
     ],
   },
 ]
@@ -68,7 +58,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../utils/variables.less";
+@import "../utils/variables.scss";
 
 .styleguide-nav {
   position: fixed;

@@ -99,7 +99,7 @@
           <button class="btn btn-secondary btn-icon">
             <icon href="pointer-right"></icon>
           </button>
-          
+
           <label class="btn btn-secondary btn-icon">
             <input class="" type="submit" value="submit"/>
             <icon href="pointer-right"></icon>
@@ -116,108 +116,5 @@
     };
 </script>
 <style lang="scss">
-  .row + .row {
-    margin-top: 1rem;
-  }
-  .pattern {
-    clear: both;
-    float: left;
-    margin: 0 0 3em;
-    width: 100%;
-    border: 1px solid;
-    border-color: #e5e5e5;
-    border-radius: 3px;
-  }
 
-  .xx-patchwork .pattern {
-    margin: 0;
-    border: none;
-    padding: 0;
-  }
-
-  .pattern-name {
-    font-family: "Gotham A", "Gotham B", "Open Sans Regular", "Verdana", "Helvetica", "Arial";
-    font-size: 16px;
-    text-transform: none;
-    margin: 0;
-  }
-
-  .pattern-details {
-    color: #004b6a;
-    background-color: #fbf9f9;
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.4);
-    padding: 0.5em 1%;
-    width: 98%;
-    overflow: hidden;
-    display: block;
-    border-bottom: 1px solid;
-    border-color: #e5e5e5;
-    border-color: rgba(229, 229, 229, 0.5);
-    border-radius: 3px 3px 0 0;
-  }
-
-  .pattern-markup {
-    border: 1px solid;
-    border-color: #e5e5e5;
-    width: 64%;
-    display: block;
-    font-size: 12px;
-    overflow: scroll;
-    max-height: 200px;
-    padding: 1em 2%;
-    margin: 1em 0;
-    float: left;
-  }
-
-  .pattern-markup,
-  :not(pre) > code[class*="language-"] {
-    padding: 1em 2% !important;
-  }
-
-  .pattern-details:hover {
-    cursor: pointer;
-  }
-
-  .pattern .pattern-code {
-    border: 1px solid #ccc;
-    float: left;
-    width: 67.5%;
-    margin: 0.5em 0 0.5em 0;
-    font-family: Menlo,Monaco,'Courier New',Courier,monospace;
-    font-size: 13px;
-    line-height: 1.2em;
-    padding: 0.5em;
-  }
-
-  .pattern-usage {
-    float: right;
-    width: 30%;
-    margin: 1.25em 0 0.5em 0;
-    font-size: 13px;
-    white-space: pre-line;
-    line-height: 1.4em;
-    font-family: "Gotham A", "Gotham B", "Open Sans Regular", "Verdana", "Helvetica", "Arial";
-  }
-
-  .pattern-preview {
-    padding: 10px;
-    width: auto;
-    background-color: #fff;
-    overflow: hidden;
-  }
-
-  .pattern {
-    clear: both;
-  }
-
-  .pattern-link {
-    float: right;
-    padding: 0 0 0 0.5em;
-  }
-
-  .pattern-link:hover,
-  .pattern-link:focus,
-  .pattern-link:active {
-    border-bottom: none;
-  }
 </style>

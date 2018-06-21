@@ -43,7 +43,7 @@ module.exports = (env, options) => {
                   useBuiltIns: (env !== 'dev')
                 }]
               ],
-              plugins: (env !== 'dev') ? ["transform-object-assign", "syntax-dynamic-import"] : []
+              plugins: (env !== 'dev') ? ["transform-object-assign"] : []
             }
           }
         }

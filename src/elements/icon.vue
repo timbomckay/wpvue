@@ -43,12 +43,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../utils/mixins';
-
 svg {
   max-width: 100%;
   max-height: 100%;
-  .transition('fill');
 
   &.icon {
     height: 1em;

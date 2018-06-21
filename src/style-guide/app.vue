@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../utils/variables.less";
+@import "../utils/variables.scss";
 
 .style-guide {
   padding-left: 4rem;

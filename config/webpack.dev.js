@@ -45,7 +45,7 @@ module.exports = merge(config, {
             }
           },
           {
-            loader: 'scss-loader',
+            loader: 'sass-loader',
             options: {}
           }
         ]

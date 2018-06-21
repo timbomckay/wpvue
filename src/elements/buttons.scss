@@ -8,7 +8,6 @@ button,
     color: #ffffff;
     cursor: pointer;
     display: inline-block;
-    font-family: @pt-sans;
     font-size: 1.25rem;
     font-weight: bold;
     letter-spacing: 0.009375em;
@@ -18,7 +17,6 @@ button,
     transform: translate3d(0, 0, 0) scale(0.999);
     width: auto;
     position: relative;
-    .transition(all);
 
     &:hover:not(.btn-disabled),&:focus:not(.btn-disabled) {
       background-color: $color-primary-light;

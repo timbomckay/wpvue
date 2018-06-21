@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div class="slim-container"><h1>Hero Components</h1></div>
+    <div class="slim-container"><h1>Sample Component</h1></div>
     <div class="mb-2" v-for="(example, key) in examples" :key="key">
       <div><h3>{{ example['sg-name'] }} </h3></div>
-      <hero :content="example.content" :type="example.type"></hero>
+      <sample :content="example.content" :type="example.type"></sample>
     </div>
   </div>
 </template>
 
 <script>
-import hero from "../../components/hero.vue";
+import sample from "../../components/sample.vue";
 export default {
-  name: 'sg-hero',
+  name: 'sg-sample',
   components: {
-    hero
+    sample
   },
   data () {
     return {

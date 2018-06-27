@@ -9,7 +9,7 @@ module.exports = (env, options) => {
   return merge( require('./webpack.' + env + '.js'), {
     entry: {
       main: path.resolve(__dirname, '../src/main.js'),
-      'style-guide': path.resolve(__dirname, '../src/style-guide/index.js'),
+      // 'style-guide': path.resolve(__dirname, '../src/style-guide/index.js'),
     },
     module: {
       rules: [

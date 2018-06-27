@@ -1,5 +1,5 @@
 <template>
-  <div class="example">{{ msg }}</div>
+  <div>{{ msg }}</div>
 </template>
 
 <script>
@@ -7,21 +7,12 @@ export default {
   name: 'Main',
   data () {
     return {
-      msg: 'Hello world!'
+      msg: 'Test world!'
     }
   }
 }
 </script>
 
 <style lang="scss">
-.vuestyle {
-  display: grid;
-  transition: all .5s;
-  user-select: none;
-  background: linear-gradient(to bottom, white, black);
-}
-.another {
-  font-size: 16px;
-  color: blue;
-}
+
 </style>

@@ -11,13 +11,10 @@ module.exports = merge(config, {
     inline: true, // use inline method for hmr
     host: "localhost",
     port: 8080,
-    publicPath: "/dist",
-    // publicPath: "/" + process.env.npm_package_name + "/dist", // this isn't working with HMR for some reason
+    publicPath: "/" + process.env.npm_package_name + "/dist",
     contentBase: path.join(__dirname, "../"),
+    compress: true, // enable gzip
     stats: "minimal", // https://webpack.js.org/configuration/stats/
-    // watchOptions: {
-    //   poll: false // needed for homestead/vagrant setup --- TM removed and doesn't seem to harm anything
-    // },
     headers: {
       "Access-Control-Allow-Origin": "*"
     },
@@ -27,7 +24,7 @@ module.exports = merge(config, {
     }
   },
   output: {
-    publicPath: 'http://localhost:8080/dist'
+    publicPath: "http://localhost:8080/" + process.env.npm_package_name + "/dist"
   },
   module: {
     rules: [

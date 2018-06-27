@@ -1,0 +1,11 @@
+/*------------------------------------*\
+    TYPOGRAPHY
+\*------------------------------------*/
+
+body {
+  color: $color-text;
+}
+
+::selection {
+	background-color: $color-primary-light;
+}

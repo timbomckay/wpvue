@@ -43,7 +43,9 @@ module.exports = merge(config, {
           },
           {
             loader: 'sass-loader',
-            options: {}
+            options: {
+              data: "@import '" + path.resolve(__dirname, '../src/utils/variables') + "';@import '" + path.resolve(__dirname, '../src/utils/mixins') + "';"
+            }
           }
         ]
       }

@@ -6,11 +6,8 @@
     "dev": "webpack-dev-server --progress --mode development --env dev --config ./config/webpack.config.js",
     "dev:watch": "webpack --mode development --env stage --config config/webpack.config.js --watch --progress",
     "staging": "webpack --mode development --env stage --config config/webpack.config.js",
-    "build": "webpack --mode production --env prod --config config/webpack.config.js",
-    "build:bump": "webpack --mode production --env prod --config config/webpack.config.js && npm run themebump",
-    "themebump": "sed -i.bak \"s/^Version:.*/Version: $(git log --pretty=\"%h\" -n1 HEAD)/\" ./style.css",
-    "svg:optimize": "svgo -f ./images/icons --disable=removeViewBox --enable=removeTitle",
-    "svg:sprite": "svg-sprite-generate -d ./images/icons -o ./images/sprite.svg"
+    "build": "webpack --mode production --env prod --config config/webpack.config.js && npm run themebump",
+    "themebump": "sed -i.bak \"s/^Version:.*/Version: $(git log --pretty=\"%h\" -n1 HEAD)/\" ./style.css"
   },
   "repository": {
     "type": "git",

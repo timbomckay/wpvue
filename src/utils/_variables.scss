@@ -2,8 +2,6 @@
   VARIABLES
 \*------------------------------------*/
 
-@import "breakpoints.scss";
-
 /* Widths */
 $max-width: 1200px; // max-width for content
 $gutter-width: 2rem; // default gutter-width
@@ -27,5 +25,3 @@ $color-tertiary-light: lighten($color-tertiary, 15%);
 $color-text: #2c3e50;
 $link-color: $color-primary;
 $link-hover: $color-primary-dark;
-
-/* FONT FAMILIES */

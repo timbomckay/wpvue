@@ -1,0 +1,13 @@
+/*------------------------------------*\
+    SCSS Mixins
+\*------------------------------------*/
+
+/**
+ * Strip-Units function
+ * Removes the unit of measurement from the number to be used as an integer.
+ * Example: 14px => 14
+ */
+
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}

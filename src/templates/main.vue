@@ -7,7 +7,7 @@ export default {
   name: 'Main',
   data () {
     return {
-      msg: 'Test world!'
+      msg: 'Hello world!'
     }
   }
 }

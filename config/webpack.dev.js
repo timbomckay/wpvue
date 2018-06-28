@@ -1,10 +1,7 @@
 const webpack = require('webpack');
-const merge = require('webpack-merge');
 const path = require('path');
 
-const config = require('./webpack.config.js');
-
-module.exports = merge(config, {
+module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     hot: true, // this enables hot reload
@@ -26,33 +23,8 @@ module.exports = merge(config, {
   output: {
     publicPath: "http://localhost:8080/" + process.env.npm_package_name + "/dist"
   },
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              config: {
-                path: path.resolve(__dirname, 'postcss.config.js')
-              }
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              data: "@import '" + path.resolve(__dirname, '../src/utils/variables') + "';@import '" + path.resolve(__dirname, '../src/utils/mixins') + "';"
-            }
-          }
-        ]
-      }
-    ]
-  },
   plugins: [
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]
-});
+};

@@ -11,6 +11,13 @@ module.exports = (env, options) => {
     entry: {
       main: path.resolve(__dirname, '../src/main.js')
     },
+    resolve: {
+      alias: {
+        // need the full version to compile templates on the client side (mostly for router-links)
+        // doc: https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only
+        vue$: 'vue/dist/vue.esm.js'
+      }
+    },
     module: {
       rules: [
         {

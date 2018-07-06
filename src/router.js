@@ -1,29 +1,20 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import VueRouter from 'vue-router';
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-const router = new Router({
+const Foo = { template: '<div>foo</div>' }
+const Bar = { template: '<div>bar</div>' }
+
+const routes = [
+  { path: '/', name: 'home', component: Bar },
+  { path: '/:slug', name: 'page', component: Foo }
+]
+
+const router = new VueRouter({
   mode: 'history',
   linkActiveClass: 'active', // a css class indicating route anchor active state
-  routes: [
-
-  ]
-});
-
-router.map({
-  '/': {
-    name: 'home',
-    component: resolve => {
-      require([`./views/${this.name}.vue`], resolve);
-    }
-  },
-  '/posts/:postid/': {
-    name: 'posts',
-    component: resolve => {
-      require([`./views/${this.name}.vue`], resolve);
-    }
-  }
+  routes: routes
 });
 
 export default router;

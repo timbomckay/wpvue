@@ -8,43 +8,48 @@
 
 // This theme uses wp_nav_menu() in one location.
 register_nav_menus( array(
-    'primary' => esc_html__( 'Primary', 'base' ),
+  'primary' => esc_html__( 'Primary', 'base' ),
 ) );
 
-
-/**
- * Elaborate menu system : https://github.com/olefredrik/FoundationPress/blob/master/library/navigation.php
- */
-
-/**
- * A fallback when no navigation is selected by default.
- */
-
-if ( ! function_exists( 'base_menu_fallback' ) ) :
-function base_menu_fallback() {
-	echo '<div class="alert-box secondary">';
-	// Translators 1: Link to Menus, 2: Link to Customize.
-		printf( __( 'Please assign a menu to the primary menu location under %1$s or %2$s the design.', 'base' ),
-			sprintf(  __( '<a href="%s">Menus</a>', 'base' ),
-				get_admin_url( get_current_blog_id(), 'nav-menus.php' )
-			),
-			sprintf(  __( '<a href="%s">Customize</a>', 'base' ),
-				get_admin_url( get_current_blog_id(), 'customize.php' )
-			)
-		);
-		echo '</div>';
-}
-endif;
-
-// Add Foundation 'active' class for the current menu item.
-if ( ! function_exists( 'base_active_nav_class' ) ) :
 function base_active_nav_class( $classes, $item ) {
-	if ( 1 == $item->current || true == $item->current_item_ancestor ) {
-		$classes[] = 'active';
-	}
+
+  // echo '<pre>';
+  // print_r([
+  //   'classes' => $classes,
+  //   // 'item' => $item
+  // ]);
+  // echo '</pre>';
+
+	// if ( 1 == $item->current || true == $item->current_item_ancestor ) {
+	// 	$classes[] = 'active';
+	// }
 	return $classes;
 }
 add_filter( 'nav_menu_css_class', 'base_active_nav_class', 10, 2 );
-endif;
 
-?>
+// Convert Menu Links to Vue Router
+function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {
+  // get home_url to detect internal links
+  $home_url = home_url();
+  // convert output if item url is internal
+  if ( strpos($item->url,$home_url) !== false ) {
+    // change opening anchor tag to router-link
+    $item_output = str_replace('<a ', '<router-link ', $item_output);
+    // change closing anchor tag to router-link
+    $item_output = str_replace('</a>', '</router-link>', $item_output);
+    // change href to specify the link by passing the `to` prop
+    $item_output = str_replace('href', 'to', $item_output);
+    // remove base url
+    $item_output = str_replace($home_url, '', $item_output);
+    if(!strpos($item_output,'to="/"')){
+      // remove trailing slash
+      $item_output = str_replace('/"', '"', $item_output);
+    }
+  } else {
+    // link is external, open in new tab
+    $item_output = str_replace('<a href', '<a target="_new" href', $item_output);
+  }
+
+  return $item_output;
+}
+add_filter( 'walker_nav_menu_start_el', 'walker_nav_menu_to_vue_router', 10, 4 );

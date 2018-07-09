@@ -16,8 +16,8 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  linkActiveClass: 'active', // a css class indicating route anchor active state, applies to ancestor, parent & exact
-  linkExactActiveClass: 'active', // a css class indicating route anchor active state, only applies to exact/single link
+  linkActiveClass: 'nav-item-active', // a css class indicating route anchor active state, applies to ancestor, parent & exact
+  linkExactActiveClass: 'nav-link-active', // a css class indicating route anchor active state, only applies to exact/single link
   routes: routes
 });
 

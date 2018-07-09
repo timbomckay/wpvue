@@ -11,7 +11,7 @@ register_nav_menus( array(
   'primary' => esc_html__( 'Primary', 'base' ),
 ) );
 
-function base_active_nav_class( $classes, $item ) {
+function reset_nav_class( $classes, $item ) {
   // classes to remove
   $removeClasses = [
     'current-menu-ancestor',
@@ -32,7 +32,7 @@ function base_active_nav_class( $classes, $item ) {
 
 	return $classes;
 }
-add_filter( 'nav_menu_css_class', 'base_active_nav_class', 10, 2 );
+add_filter( 'nav_menu_css_class', 'reset_nav_class', 10, 2 );
 
 // Convert Menu Links to Vue Router
 function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {

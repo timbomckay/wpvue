@@ -9,7 +9,7 @@ Vue.component('icon', icon)
 
 new Vue({
   el: '#main',
-  Router,
+  router: Router,
   render: (h) => h(Main),
 });
 

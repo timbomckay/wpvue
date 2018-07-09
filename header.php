@@ -2,7 +2,7 @@
 /**
  * The header for our theme.
  *
- * This is the template that displays all of the <head> section and everything up until <div id="content">
+ * This template displays all of the <head> section and everything up until <div id="content">
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
@@ -23,7 +23,7 @@
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body class="<?php if(is_user_logged_in()){ echo 'logged-in'; if(is_admin_bar_showing()){ echo ' admin-bar'; } } ?>">
 
 	<header class="site-header" role="banner">
 		<div class="container">
@@ -32,15 +32,12 @@
 				<?php if ( $description = get_bloginfo( 'description', 'display' ) ) : ?>
 					<p class="site-description"><?php echo $description; ?></p>
 				<?php endif; ?>
-			</div><!-- .site-branding -->
-
-			<nav id="site-navigation" class="main-navigation" role="navigation">
+			</div>
+			<nav id="site-navigation" class="site-navigation" role="navigation">
 				<?php wp_nav_menu( array(
 					'theme_location' => 'primary',
-					'menu_id' => 'primary-menu'
-				) ); ?><!-- #site-navigation -->
-				<router-view></router-view>
+					'container' => false // removes the div container, keeping nav separate for the 'role' tag
+				) ); ?>
 			</nav>
 		</div>
-
-	</header><!-- #masthead -->
+	</header>

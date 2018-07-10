@@ -3,15 +3,23 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-const Page = { template: '<div>Page</div>' }
-const Home = { template: '<div>Home</div>' }
+const home = {
+  name: 'Home',
+  template: '<div>Home</div>'
+}
 
 const routes = [
-  { path: '/', name: 'home', component: Home },
+  // front-page
+  { path: '/', component: () => import('./templates/front-page.vue') },
+  // blog pages
+  { path: '/blog/:page(\\d+)?', component: () => import('./templates/archive.vue') },
+	{ path: '/blog/category/:slug', component: () => import('./templates/archive.vue') },
+	{ path: '/blog/tag/:slug', component: () => import('./templates/archive.vue') },
+	{ path: '/blog/:slug', component: () => import('./templates/posts.vue') },
   //  default pages
-  { path: '/:slug', name: 'page', component: Page },
-  { path: '/:parent/:slug', name: 'page', component: Page },
-  { path: '/:ancestor/:parent/:slug', name: 'page', component: Page }
+  { path: '/:slug', component: () => import('./templates/pages.vue') },
+  { path: '/:parent/:slug', component: () => import('./templates/pages.vue') },
+  { path: '/:ancestor/:parent/:slug', component: () => import('./templates/pages.vue') }
 ]
 
 const router = new VueRouter({

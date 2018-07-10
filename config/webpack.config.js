@@ -7,9 +7,16 @@ const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, options) => {
-  let config = merge( require('./webpack.' + env + '.js'), {
+  // define path to theme directory
+  const THEME_URI = '/wp-content/themes/' + process.env.npm_package_name;
+
+  let config = merge({
     entry: {
       main: path.resolve(__dirname, '../src/main.js')
+    },
+    output: {
+      // set publicPath to output path in theme directory
+      publicPath: THEME_URI + '/dist/'
     },
     resolve: {
       alias: {
@@ -50,7 +57,7 @@ module.exports = (env, options) => {
                   useBuiltIns: (env !== 'dev')
                 }]
               ],
-              plugins: (env !== 'dev') ? ["transform-object-assign"] : []
+              plugins: ["transform-object-assign","syntax-dynamic-import"]
             }
           }
         },
@@ -84,11 +91,11 @@ module.exports = (env, options) => {
       }),
       new webpack.DefinePlugin({
         'ENV': JSON.stringify(env),
-        'THEME_URI': JSON.stringify('/wp-content/themes/' + process.env.npm_package_name)
+        'THEME_URI': JSON.stringify(THEME_URI)
       }),
       new VueLoaderPlugin()
     ]
-  });
+  }, require('./webpack.' + env + '.js'));
 
   // Add CSS Extraction if not in devServer
   if (!config.devServer) {

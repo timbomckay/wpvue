@@ -1,6 +1,6 @@
 <template>
-  <transition name="slide-fade" mode="out-in">
-    <router-view :data="data"></router-view>
+  <transition appear name="slide-fade" mode="out-in">
+    <router-view v-bind:key="key" :data="data"></router-view>
   </transition>
 </template>
 
@@ -9,7 +9,8 @@ export default {
   name: 'Main',
   data() {
 		return {
-			data: false
+			data: false,
+      key: 0 // used for triggering transitions
 		};
 	},
   watch: {
@@ -28,9 +29,7 @@ export default {
 			} )
 			.then( ( res ) => {
 				vm.data = res.data[0];
-				// vm.loaded = 'true';
-				// vm.pageTitle = vm.post.title.rendered;
-				// vm.$store.commit( 'rtChangeTitle', vm.pageTitle );
+        vm.key++; // increment key to trigger transition
 			} )
 			.catch( ( res ) => {
 				//console.log( `Something went wrong : ${res}` );

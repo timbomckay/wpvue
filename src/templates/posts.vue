@@ -1,10 +1,8 @@
 <template>
-  <transition name="slide-fade" mode="out-in">
-    <div>
-      <h1>{{ data.title.rendered }}</h1>
-      <div v-html="data.content.rendered"></div>
-    </div>
-  </transition>
+  <div>
+    <h1>{{ data.title.rendered }}</h1>
+    <div v-html="data.content.rendered"></div>
+  </div>
 </template>
 
 <script>

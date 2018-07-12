@@ -33,6 +33,9 @@ require 'inc/widget-areas.php';
 /** Favicon tags **/
 require 'inc/favicon.php';
 
+/** Include api */
+require 'inc/api.php';
+
 /** Include ACF */
 if( function_exists('acf_add_local_field_group') ):
   require 'inc/acf/index.php';

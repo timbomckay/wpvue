@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img v-if="data.featured_image" :src="data.featured_image.full.url" :width="data.featured_image.full.width" :height="data.featured_image.full.height" />
     <h1>{{ data.title.rendered }}</h1>
     <div v-html="data.content.rendered"></div>
   </div>

@@ -2,6 +2,7 @@
   <transition name="slide-fade" mode="out-in">
     <div>
       <h1 v-text="title"></h1>
+      <div v-if="data.content" v-html="data.content.rendered"></div>
       <div v-if="archive">
         <div v-for="post in archive">
           <h2 v-text="post.title.rendered"></h2>
@@ -46,7 +47,7 @@ export default {
     //   const vm = this;
     // },
     convertLink (url) {
-      return url.replace('http://wpvue.localhost','');
+      return url.replace(site.baseURL,'');
     }
   }
 }

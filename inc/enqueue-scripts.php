@@ -43,9 +43,13 @@ function base_scripts() {
 		// Register a newer version if project requires jQuery
 		wp_deregister_script( 'jquery' );
 
-    wp_localize_script( 'main', $theme->get('TextDomain'), array(
-      // 'nonce'     => wp_create_nonce( 'wp_rest' ),
-      'query' => ($p = sanitize_post( $GLOBALS['wp_the_query']->get_queried_object() )) ? $p : $GLOBALS['wp_the_query']->posts
+    wp_localize_script( 'main', 'site', array(
+      'nonce' => wp_create_nonce( 'wp_rest' ),
+      'name'	=> get_bloginfo( 'name' ),
+			'baseURL' => get_option( 'home' ),
+			'home'	=> get_post_field( 'post_name', get_option( 'page_on_front' ) ),
+			'blog'	=> get_post_field( 'post_name', get_option( 'page_for_posts' ) ),
+      'query'	=> ($p = sanitize_post( $GLOBALS['wp_the_query']->get_queried_object() )) ? $p : $GLOBALS['wp_the_query']->posts
     ) );
 
 	}

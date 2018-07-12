@@ -32,7 +32,7 @@ export default {
         const names = {
           'front-page': function () {
             type = 'pages';
-            params.slug = 'home'
+            params.slug = site.home
           },
           'category': function () {
             type = 'categories';
@@ -44,7 +44,7 @@ export default {
 
             if(!params.slug) {
               type = 'pages'
-              params.slug ='blog'
+              params.slug = site.blog
             } else {
               names[vm.$route.params.taxonomy]();
             }

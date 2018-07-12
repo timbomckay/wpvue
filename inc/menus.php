@@ -40,9 +40,9 @@ function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {
   // get home_url to detect internal links
   $home_url = home_url();
   // convert output if item url is internal
-  if ( strpos($item->url,$home_url) !== false ) {
+  if ( (strpos($item->url,$home_url) !== false) || (substr($item->url, 0, strlen("/")) === "/") ) {
     // change opening anchor tag to router-link
-    $item_output = str_replace('<a ', '<router-link class="nav-link"', $item_output);
+    $item_output = str_replace('<a ', '<router-link class="nav-link" ', $item_output);
     // change closing anchor tag to router-link
     $item_output = str_replace('</a>', '</router-link>', $item_output);
     // change href to specify the link by passing the `to` prop

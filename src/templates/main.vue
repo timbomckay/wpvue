@@ -20,15 +20,52 @@ export default {
   methods: {
     fetchData () {
       const vm = this;
-      const type = this.$route.matched[0].components.default.name.toLowerCase();
+      // assign component name as default posttype
+      let type = vm.$route.matched[0].components.default.name.toLowerCase();
+      // assign default parameters
+      let params = {
+        slug: vm.$route.params.slug || false
+      }
 
-			vm.$http.get( '/wp-json/wp/v2/' + type, {
-				params: {
-          slug: vm.$route.params.slug
+      function checkPostType (name) {
+
+        const names = {
+          'front-page': function () {
+            type = 'pages';
+            params.slug = 'home'
+          },
+          'category': function () {
+            type = 'categories';
+          },
+          'tag': function () {
+            type = 'tags';
+          },
+          'archive': function () {
+
+            if(!params.slug) {
+              type = 'pages'
+              params.slug ='blog'
+            } else {
+              names[vm.$route.params.taxonomy]();
+            }
+
+          }
+        };
+
+        // run function if name is listed
+        if(names[name]) {
+          names[name]();
         }
+
+        return type;
+      }
+
+			vm.$http.get( '/wp-json/wp/v2/' + checkPostType(type), {
+				params: params
 			} )
 			.then( ( res ) => {
 				vm.data = res.data[0];
+        vm.data.type = type;
         vm.key++; // increment key to trigger transition
 			} )
 			.catch( ( res ) => {

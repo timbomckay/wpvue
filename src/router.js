@@ -10,16 +10,16 @@ const home = {
 
 const routes = [
   // front-page
-  { path: '/', component: () => import('./templates/front-page.vue') },
+  { path: '/', component: () => import(/* webpackChunkName: "front-page" */'./templates/front-page.vue') },
   // blog pages
-  { path: '/blog/:page(\\d+)?', component: () => import('./templates/archive.vue') },
-	{ path: '/blog/category/:slug', component: () => import('./templates/archive.vue') },
-	{ path: '/blog/tag/:slug', component: () => import('./templates/archive.vue') },
-	{ path: '/blog/:slug', component: () => import('./templates/posts.vue') },
+  { path: '/blog/:page(\\d+)?', component: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue') },
+	{ path: '/blog/:slug', component: () => import(/* webpackChunkName: "post" */'./templates/posts.vue') },
+	{ path: '/blog/:taxonomy/:slug', component: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue') },
+	{ path: '/blog/:taxonomy/:parent/:slug', component: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue') },
   //  default pages
-  { path: '/:slug', component: () => import('./templates/pages.vue') },
-  { path: '/:parent/:slug', component: () => import('./templates/pages.vue') },
-  { path: '/:ancestor/:parent/:slug', component: () => import('./templates/pages.vue') }
+  { path: '/:slug', component: () => import(/* webpackChunkName: "page" */'./templates/pages.vue') },
+  { path: '/:parent/:slug', component: () => import(/* webpackChunkName: "page" */'./templates/pages.vue') },
+  { path: '/:ancestor/:parent/:slug', component: () => import(/* webpackChunkName: "page" */'./templates/pages.vue') }
 ]
 
 const router = new VueRouter({

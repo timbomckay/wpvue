@@ -14,10 +14,6 @@ export default {
 
 		};
 	},
-  watch: {
-    // call again the method if the route changes
-    '$route': 'fetchData'
-  },
   methods: {
     fetchData () {
       const vm = this;

@@ -54,19 +54,11 @@ function new_post_type($pt_plural, $pt_singular = null, $pt_slug = null, $icon =
 
 function custom_posts() {
 
-  new_post_type('Style Guide', 'Style Guide', 'style-guide', 'dashicons-sos', array(
-    'has_archive' => true,
-    'exclude_from_search' => true
-  ));
+  new_post_type('Testimonials', 'Testimonial', 'testimonials', 'dashicons-arrow-right-alt2');
 
 }
 
-add_action( 'init', 'custom_posts' );
-
-add_action( 'init', function() {
-  // redirect all style-guide urls to archive tempalte, vue router will take over from there
-  add_rewrite_rule( 'style-guide/([^/]+)/?$', 'index.php?post_type=style-guide', 'top' );
-} );
+// add_action( 'init', 'custom_posts' );
 
 /*
   Add Custom Post Types to REST API

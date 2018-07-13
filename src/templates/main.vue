@@ -67,6 +67,7 @@ export default {
 				vm.data = res.data[0];
         vm.data.type = type;
         vm.key++; // increment key to trigger transition
+        window.scrollTo(0, 0); // scroll back to top
 			} )
 			.catch( ( res ) => {
 				//console.log( `Something went wrong : ${res}` );

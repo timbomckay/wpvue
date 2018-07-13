@@ -1,18 +1,16 @@
 <template>
-  <transition name="slide-fade" mode="out-in">
-    <div>
-      <h1 v-text="title"></h1>
-      <div v-if="data.content" v-html="data.content.rendered"></div>
-      <div v-if="archive">
-        <div v-for="post in archive">
-          <img v-if="post.featured_image" :src="post.featured_image.medium.url" :width="post.featured_image.medium.width" :height="post.featured_image.medium.height" />
-          <h2 v-text="post.title.rendered"></h2>
-          <div v-html="post.excerpt.rendered"></div>
-          <router-link :to="convertLink(post.link)">View Post</router-link>
-        </div>
+  <div>
+    <h1 v-text="title"></h1>
+    <div v-if="data.content" v-html="data.content.rendered"></div>
+    <div v-if="archive">
+      <div v-for="post in archive">
+        <img v-if="post.featured_image" :src="post.featured_image.medium.url" :width="post.featured_image.medium.width" :height="post.featured_image.medium.height" />
+        <h2 v-text="post.title.rendered"></h2>
+        <div v-html="post.excerpt.rendered"></div>
+        <router-link :to="convertLink(post.link)">View Post</router-link>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>

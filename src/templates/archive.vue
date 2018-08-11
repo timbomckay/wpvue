@@ -7,7 +7,7 @@
         <img v-if="post.featured_image" :src="post.featured_image.medium.url" :width="post.featured_image.medium.width" :height="post.featured_image.medium.height" />
         <h2 v-text="post.title.rendered"></h2>
         <div v-html="post.excerpt.rendered"></div>
-        <router-link :to="convertLink(post.link)">View Post</router-link>
+        <router-link :to="convertLink(post.link)" v-on:click.native="updateQuery(post)">View Post</router-link>
       </div>
     </div>
   </div>
@@ -42,9 +42,9 @@ export default {
 		};
 	},
   methods: {
-    // fetchData () {
-    //   const vm = this;
-    // },
+    updateQuery (post) {
+      this.$store.commit('updateQuery', post);
+    },
     convertLink (url) {
       return url.replace(site.baseURL,'');
     }

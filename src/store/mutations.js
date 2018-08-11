@@ -14,7 +14,10 @@ exampleMutation:
 */
 
 const mutations = {
-
+  updateQuery (state, newQuery) {
+    console.log('updateQuery', newQuery);
+    state.query = newQuery;
+  }
 }
 
 export default mutations;

@@ -1,6 +1,6 @@
 <template>
   <transition appear name="slide-fade" mode="out-in">
-    <router-view v-bind:key="key" :data="data"></router-view>
+    <router-view v-bind:key="key" :data="query"></router-view>
   </transition>
 </template>
 
@@ -9,13 +9,23 @@ export default {
   name: 'Main',
   data() {
 		return {
-			data: false,
       key: 0 // used for triggering transitions
 		};
 	},
   watch: {
     // call again the method if the route changes
-    '$route': 'fetchData'
+    '$route' (to, from) {
+      if(to.params.slug !== this.query.slug) {
+        this.fetchData();
+      }
+      this.key++; // increment key to trigger transition
+      window.scrollTo(0, 0); // scroll back to top
+    }
+  },
+  computed: {
+    query () {
+      return this.$store.state.query || false
+    }
   },
   methods: {
     fetchData () {
@@ -64,13 +74,10 @@ export default {
 				params: params
 			} )
 			.then( ( res ) => {
-				vm.data = res.data[0];
-        vm.data.type = type;
-        vm.key++; // increment key to trigger transition
-        window.scrollTo(0, 0); // scroll back to top
+        vm.$store.commit('updateQuery', Object.assign(res.data[0], {type: type}));
 			} )
 			.catch( ( res ) => {
-				//console.log( `Something went wrong : ${res}` );
+				console.log( `Something went wrong : ${res}` );
 			} );
 
     }

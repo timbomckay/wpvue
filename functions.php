@@ -15,6 +15,9 @@ require 'inc/menus.php';
 /** Enqueue scripts */
 require 'inc/enqueue-scripts.php';
 
+/** Localize Scripts */
+require 'inc/localize_script.php';
+
 /** Add Images */
 require 'inc/images.php';
 

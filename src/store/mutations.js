@@ -14,9 +14,11 @@ exampleMutation:
 */
 
 const mutations = {
-  updateQuery (state, newQuery) {
-    console.log('updateQuery', newQuery);
-    state.query = newQuery;
+  updatePost (state, newData) {
+    state.post = newData;
+  },
+  updateArchive (state, newData) {
+    state.archive = newData;
   }
 }
 

@@ -6,14 +6,13 @@ import mutations from './mutations';
 Vue.use(Vuex);
 
 const state = {
-  query: site.query || false
+  post: site.post || false,
+  archive: site.archive || false
 }
 
 const getters = {
 
 }
-
-console.log('mutations', mutations);
 
 const store = new Vuex.Store({
   state: state,

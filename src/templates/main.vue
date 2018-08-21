@@ -1,6 +1,6 @@
 <template>
   <transition appear name="slide-fade" mode="out-in">
-    <router-view v-bind:key="key" :data="query"></router-view>
+    <router-view v-bind:key="key" :data="post"></router-view>
   </transition>
 </template>
 
@@ -12,10 +12,15 @@ export default {
       key: 0 // used for triggering transitions
 		};
 	},
+  mounted: function () {
+    // console.log('main mounted');
+    // var matches = document.querySelectorAll(".content a");
+    // console.log(matches);
+  },
   watch: {
     // call again the method if the route changes
     '$route' (to, from) {
-      if(to.params.slug !== this.query.slug) {
+      if(to.params.slug !== this.post.slug) {
         this.fetchData();
       }
       this.key++; // increment key to trigger transition
@@ -23,8 +28,8 @@ export default {
     }
   },
   computed: {
-    query () {
-      return this.$store.state.query || false
+    post () {
+      return this.$store.state.post || false
     }
   },
   methods: {
@@ -74,13 +79,18 @@ export default {
 				params: params
 			} )
 			.then( ( res ) => {
-        vm.$store.commit('updateQuery', Object.assign(res.data[0], {type: type}));
+        vm.$store.commit('updatePost', Object.assign(res.data[0], {type: type}));
 			} )
 			.catch( ( res ) => {
 				console.log( `Something went wrong : ${res}` );
 			} );
 
     }
+  },
+  updated() {
+    // console.log('main updated')
+    // var matches = document.querySelectorAll(".content a");
+    // console.log(matches);
   }
 }
 </script>

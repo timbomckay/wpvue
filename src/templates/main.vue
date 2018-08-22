@@ -12,19 +12,16 @@ export default {
       key: 0 // used for triggering transitions
 		};
 	},
-  mounted: function () {
-    // console.log('main mounted');
-    // var matches = document.querySelectorAll(".content a");
-    // console.log(matches);
-  },
   watch: {
-    // call again the method if the route changes
+    // call the method if the route changes
     '$route' (to, from) {
       if(to.params.slug !== this.post.slug) {
         this.fetchData();
+        this.$store.commit('updateArchive', false);
       }
       this.key++; // increment key to trigger transition
       window.scrollTo(0, 0); // scroll back to top
+      // TODO Update page title
     }
   },
   computed: {
@@ -86,11 +83,6 @@ export default {
 			} );
 
     }
-  },
-  updated() {
-    // console.log('main updated')
-    // var matches = document.querySelectorAll(".content a");
-    // console.log(matches);
   }
 }
 </script>

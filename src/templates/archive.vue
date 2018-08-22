@@ -24,7 +24,7 @@ export default {
 
     vm.$http.get( '/wp-json/wp/v2/posts', {
 			params: {
-        [vm.data.taxonomy]: vm.data.id, // this is ignored on index/blog page
+        [vm.data.rest_base]: vm.data.id, // this is ignored on index/blog page
         page: vm.$route.params.page
       }
 		} )
@@ -32,7 +32,7 @@ export default {
       this.$store.commit('updateArchive', res.data);
     } )
     .catch( ( res ) => {
-      //console.log( `Something went wrong : ${res}` );
+      console.log( `Something went wrong : ${res}` );
     } );
 
   },

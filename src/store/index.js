@@ -6,8 +6,8 @@ import mutations from './mutations';
 Vue.use(Vuex);
 
 const state = {
-  post: site.post || false,
-  archive: site.archive || false
+  post: site.post,
+  archive: site.archive
 }
 
 const getters = {

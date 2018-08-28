@@ -13,9 +13,10 @@ export default {
 		};
 	},
   watch: {
-    // call the method if the route changes
     '$route' (to, from) {
-      if(to.params.slug !== this.post.slug) {
+      // fetchData if the route changes
+      // from.matched.length means it's not the initial load
+      if(from.matched.length && (to.params.slug !== this.post.slug)) {
         this.fetchData();
         this.$store.commit('updateArchive', false);
       }
@@ -26,7 +27,7 @@ export default {
   },
   computed: {
     post () {
-      return this.$store.state.post || false
+      return this.$store.state.post
     }
   },
   methods: {
@@ -39,6 +40,7 @@ export default {
         slug: vm.$route.params.slug || false
       }
 
+      // TODO: Remove this in favor of new site.rest_routes
       function checkPostType (name) {
 
         const names = {
@@ -81,7 +83,6 @@ export default {
 			.catch( ( res ) => {
 				console.log( `Something went wrong : ${res}` );
 			} );
-
     }
   }
 }

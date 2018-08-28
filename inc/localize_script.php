@@ -3,19 +3,44 @@
  *  Localize Script
  */
 
+// TODO: Test Custom post_types
+
+
 function localize_script() {
 	if (!is_admin()) {
 		global $wp_query;
 
-		$id = $wp_query->queried_object_id;
+		$rest_routes = [
+			'taxonomies' => [
+				'author' => 'users',
+				'tag' => 'tags'
+			]
+		];
 
-		if(is_category() || is_tag() || is_tax()) {
-			$type = get_taxonomy($wp_query->queried_object->taxonomy);
-		} else {
-			$type = get_post_type_object($wp_query->queried_object->post_type);
+		// get rest_routes for post_types
+		foreach (get_post_types() as $k => $type) {
+			$t = get_post_type_object($type);
+			if ($t->show_in_rest) {
+				$rest_routes['post_types'][$k] = $t->rest_base;
+			}
 		}
 
-		$request = new WP_REST_Request( 'GET', "/wp/v2/$type->rest_base/$id" );
+		// get rest_routes for taxonomies
+		foreach (get_taxonomies() as $k => $type) {
+			$t = get_taxonomy($type);
+			if ($t->show_in_rest) {
+				$rest_routes['taxonomies'][$k] = $t->rest_base;
+			}
+		}
+
+		// set route to post_type
+		$route = $rest_routes['post_types'][$wp_query->queried_object->post_type];
+		// if no route, assign to author or taxonomy
+		if(!$route) {
+			$route = is_author() ? 'users' : $rest_routes['taxonomies'][$wp_query->queried_object->taxonomy];
+		}
+
+		$request = new WP_REST_Request( 'GET', "/wp/v2/$route/$wp_query->queried_object_id" );
 		$response = rest_do_request( $request );
 		$rest_post = $response->get_data();
 
@@ -35,7 +60,8 @@ function localize_script() {
 			'home'	=> get_post_field( 'post_name', get_option( 'page_on_front' ) ),
 			'blog'	=> get_post_field( 'post_name', get_option( 'page_for_posts' ) ),
 			'post' => $rest_post,
-			'archive' => $rest_archive
+			'archive' => $rest_archive,
+			'rest_routes' => (object) $rest_routes
     ) );
 
 	}

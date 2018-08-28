@@ -8,6 +8,8 @@ const home = {
   template: '<div>Home</div>'
 }
 
+// TODO: Account for blog being the home page
+
 const routes = [
   // front-page
   { path: '/', component: () => import(/* webpackChunkName: "front-page" */'./templates/front-page.vue') },

@@ -3,19 +3,19 @@
  * ACF Data in Post Object Response
  */
 
-$types = ['post', 'page'];
+// get post_types
+foreach (get_post_types() as $k => $type) {
+  $t = get_post_type_object($type);
+  if ($t->show_in_rest) {
+    $types[] = $type;
+  }
+}
 
 // Add elapsed time to articles
 add_action( 'rest_api_init', function() use ($types) {
 
   register_rest_field( $types, 'featured_image', array(
 		'get_callback'    => 'get_image_src',
-		'update_callback' => null,
-		'schema'          => null,
-	));
-
-  register_rest_field( $types, 'rest_base', array(
-		'get_callback'    => 'wpvue_get_rest_base',
 		'update_callback' => null,
 		'schema'          => null,
 	));
@@ -35,31 +35,4 @@ function get_image_src( $object, $field_name, $request ) {
 	$feat_img_array['srcset'] = wp_get_attachment_image_srcset( $object['featured_media'] );
 	$image = is_array( $feat_img_array ) ? $feat_img_array : false;
 	return $image;
-}
-
-function wpvue_get_rest_base( $object, $field_name, $request ) {
-
-  $response = get_post_type_object($object['post_type']);
-
-	return $response->show_in_rest ? $response->rest_base : false;
-}
-
-$taxtypes = ['category', 'tag'];
-
-// Add elapsed time to articles
-add_action( 'rest_api_init', function() use ($taxtypes) {
-
-  register_rest_field( $taxtypes, 'rest_base', array(
-		'get_callback'    => 'wpvue_get_tax_rest_base',
-		'update_callback' => null,
-		'schema'          => null,
-	));
-
-});
-
-function wpvue_get_tax_rest_base( $object, $field_name, $request ) {
-
-  $response = get_taxonomy($object['taxonomy']);
-
-	return $response->show_in_rest ? $response->rest_base : false;
 }

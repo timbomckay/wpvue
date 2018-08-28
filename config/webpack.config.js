@@ -5,6 +5,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const SizePlugin = require('size-plugin');
 
 module.exports = (env, options) => {
   // define path to theme directory
@@ -53,7 +54,7 @@ module.exports = (env, options) => {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['env', {
+                ['@babel/preset-env', {
                   useBuiltIns: (env !== 'dev')
                 }]
               ],
@@ -93,7 +94,8 @@ module.exports = (env, options) => {
         'ENV': JSON.stringify(env),
         'THEME_URI': JSON.stringify(THEME_URI)
       }),
-      new VueLoaderPlugin()
+      new VueLoaderPlugin(),
+      new SizePlugin()
     ]
   }, require('./webpack.' + env + '.js'));
 

@@ -55,7 +55,7 @@ module.exports = (env, options) => {
             options: {
               presets: [
                 ['@babel/preset-env', {
-                  useBuiltIns: (env !== 'dev')
+                  useBuiltIns: (env !== 'dev') ? 'entry' : false
                 }]
               ],
               plugins: ["transform-object-assign","syntax-dynamic-import"]

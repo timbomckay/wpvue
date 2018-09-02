@@ -1,14 +1,28 @@
 <template>
   <div>
-    <h1 v-text="title"></h1>
-    <div v-if="data.content" v-html="data.content.rendered"></div>
+    <h1 v-text="title" />
+    <div
+      v-if="data.content"
+      v-html="data.content.rendered" />
     <div v-if="archive">
+      <button
+        v-if="page.prev"
+        @click="fetchArchive(page.prev, 'prev')">Load Previous Page</button>
       <div v-for="post in archive">
-        <img v-if="post.featured_image" :src="post.featured_image.medium.url" :width="post.featured_image.medium.width" :height="post.featured_image.medium.height" />
-        <h2 v-text="post.title.rendered"></h2>
-        <div v-html="post.excerpt.rendered"></div>
-        <router-link :to="convertLink(post.link)" v-on:click.native="updatePost(post)">View Post</router-link>
+        <img
+          v-if="post.featured_image"
+          :src="post.featured_image.medium.url"
+          :width="post.featured_image.medium.width"
+          :height="post.featured_image.medium.height">
+        <h2 v-text="post.title.rendered" />
+        <div v-html="post.excerpt.rendered" />
+        <router-link
+          :to="convertLink(post.link)"
+          @click.native="postReplace(post)">View Post</router-link>
       </div>
+      <button
+        v-if="page.next"
+        @click="fetchArchive(page.next, 'next')">Load More</button>
     </div>
   </div>
 </template>
@@ -17,48 +31,105 @@
 export default {
   name: 'Archive',
   props: ['data'],
-  created: function () {
-    if (!this.archive) {
-      this.fetchArchive();
-    }
-  },
   data() {
-		return {
+    return {
       title: this.data.name || this.data.title.rendered || 'Archive',
-		};
-	},
+      page: {
+        prev: this.$route.params.page ? Number(this.$route.params.page) - 1 : 0,
+        next: false
+      }
+    };
+  },
   computed: {
     archive () {
-      return this.$store.state.archive || false
+      return this.$store.state.archive
     }
   },
-  methods: {
-    updatePost (post) {
-      this.$store.commit('updatePost', post);
-    },
-    convertLink (url) {
-      return url.replace(site.baseURL,'');
-    },
-    fetchArchive () {
-      const vm = this;
-      vm.$http.get( '/wp-json/wp/v2/posts', {
-  			params: {
-          [site.rest_routes['taxonomies'][vm.$route.params.taxonomy]]: vm.data.id, // this is ignored on index/blog page
-          page: vm.$route.params.page
+  created () {
+    if (!this.archive.length) {
+      this.fetchArchive();
+    }
+
+    // initial instance, check for total pages to be more than 1
+    if (this.data.pages && (this.data.pages > 1)) {
+      if (this.$route.params.page) {
+        if (this.$route.params.page === this.data.pages) {
+          this.page.next = false
         }
-  		} )
-      .then( ( res ) => {
-        vm.$store.commit('updateArchive', res.data);
-      } )
-      .catch( ( res ) => {
-        console.log( `Something went wrong : ${res}` );
-      } );
+        if (this.$route.params.page < this.data.pages) {
+          // if current page is more than 1 and less than total pages
+          this.page.next = Number(this.$route.params.page) + 1
+        }
+      } else {
+        // assume we're on the first page
+        this.page.next = 2
+      }
     }
   },
   beforeDestroy() {
     // empty the archive
-    // this.$store.commit('updateArchive', false);
-  }
+    // this.$store.commit('archiveReplace', false);
+  },
+  methods: {
+    postReplace (post) {
+      this.$store.commit('postReplace', post);
+    },
+    convertLink (url) {
+      return url.replace(site.baseURL,'');
+    },
+    updateWindow () {
+      let vm = this;
+      let url = vm.$route.path;
+      let page = vm.$route.params.page || 1;
+
+      console.log('updateWindow', url, page);
+
+      if(url.indexOf("page/") >= 0) {
+        url = url.replace(/page\/(\d+)\//g,'page/' + page + '/');
+      } else {
+        url += 'page/' + page + '/';
+      }
+
+      console.log('updateWindow', page, url);
+
+      // window.history.pushState(page,'',url);
+    },
+    fetchArchive (page = (this.$route.params.page || 1), dir = 'replace') {
+      const vm = this;
+      vm.$http.get( '/wp-json/wp/v2/posts', {
+        params: {
+          [site.rest_routes['taxonomies'][vm.$route.params.taxonomy]]: vm.data.id, // this is ignored on index/blog page
+          page: page
+        }
+      } )
+        .then( ( res ) => {
+          const pages = Number(res.headers['x-wp-totalpages']);
+
+          vm.$store.commit('postMerge', {pages: pages});
+
+          switch (dir) {
+            case 'prev':
+              vm.$store.commit('archivePrepend', res.data);
+
+              vm.page.prev--
+
+              break;
+            case 'next':
+              vm.$store.commit('archiveAppend', res.data);
+
+              vm.page.next = (page < pages) ? page + 1 : false
+
+              break;
+            default:
+              vm.$store.commit('archiveReplace', res.data);
+          }
+
+        } )
+        .catch( ( res ) => {
+          console.log( `Something went wrong : ${res}` );
+      } );
+    }
+  },
 }
 </script>
 

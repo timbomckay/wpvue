@@ -10,7 +10,7 @@ import icon from './elements/icon.vue';
 
 Vue.prototype.$http = axios;
 
-Vue.component('icon', icon)
+Vue.component('icon', icon);
 
 new Vue({
   el: '#main',
@@ -21,4 +21,4 @@ new Vue({
 
 new Vue({
   router: Router
-}).$mount('#site-navigation')
+}).$mount('#site-navigation');

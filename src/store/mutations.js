@@ -14,11 +14,20 @@ exampleMutation:
 */
 
 const mutations = {
-  updatePost (state, newData) {
-    state.post = newData;
+  postMerge (state, data) {
+    state.post = Object.assign(state.post, data);
   },
-  updateArchive (state, newData) {
-    state.archive = newData;
+  postReplace (state, data) {
+    state.post = data;
+  },
+  archiveReplace (state, data) {
+    state.archive = data;
+  },
+  archiveAppend (state, data) {
+    state.archive = state.archive.concat(data);
+  },
+  archivePrepend (state, data) {
+    state.archive = data.concat(state.archive);
   }
 }
 

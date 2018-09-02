@@ -50,6 +50,7 @@ function localize_script() {
 				$request = new WP_REST_Request( 'GET', "/wp/v2/$type->rest_base/$p->ID" );
 				$response = rest_do_request( $request );
 				$rest_archive[] = $response->get_data();
+				$rest_post['pages'] = $wp_query->max_num_pages;
 			}
 		}
 
@@ -60,7 +61,7 @@ function localize_script() {
 			'home'	=> get_post_field( 'post_name', get_option( 'page_on_front' ) ),
 			'blog'	=> get_post_field( 'post_name', get_option( 'page_for_posts' ) ),
 			'post' => $rest_post,
-			'archive' => $rest_archive,
+			'archive' => isset($rest_archive) ? $rest_archive : [],
 			'rest_routes' => (object) $rest_routes
     ) );
 

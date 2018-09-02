@@ -18,11 +18,13 @@ export default {
       // from.matched.length means it's not the initial load
       if(from.matched.length && (to.params.slug !== this.post.slug)) {
         this.fetchData();
-        this.$store.commit('updateArchive', false);
+        this.$store.commit('archiveReplace', []);
+      } else {
+        // Update page title
+        this.updateTitle();
       }
       this.key++; // increment key to trigger transition
       window.scrollTo(0, 0); // scroll back to top
-      // TODO Update page title
     }
   },
   computed: {
@@ -31,6 +33,10 @@ export default {
     }
   },
   methods: {
+    updateTitle () {
+      let pageTitle = this.post.title ? this.post.title.rendered : this.post.name;
+      document.title = pageTitle + ' | ' + site.name;
+    },
     fetchData () {
       const vm = this;
       // assign component name as default posttype
@@ -78,7 +84,9 @@ export default {
 				params: params
 			} )
 			.then( ( res ) => {
-        vm.$store.commit('updatePost', Object.assign(res.data[0], {type: type}));
+        vm.$store.commit('postReplace', Object.assign(res.data[0], {type: type}));
+        // Update page title
+        vm.updateTitle();
 			} )
 			.catch( ( res ) => {
 				console.log( `Something went wrong : ${res}` );

@@ -7,7 +7,7 @@
     <div v-if="archive">
       <button
         v-if="page.prev"
-        @click="fetchArchive(page.prev, 'prev')">Load Previous Page</button>
+        @click="fetchArchive('prev', page.prev)">Load Previous Page</button>
       <div v-for="post in archive">
         <img
           v-if="post.featured_image"
@@ -22,7 +22,7 @@
       </div>
       <button
         v-if="page.next"
-        @click="fetchArchive(page.next, 'next')">Load More</button>
+        @click="fetchArchive('next', page.next)">Load More</button>
     </div>
   </div>
 </template>
@@ -77,24 +77,21 @@ export default {
     convertLink (url) {
       return url.replace(site.baseURL,'');
     },
-    updateWindow () {
+    updateWindow (page) {
       let vm = this;
       let url = vm.$route.path;
-      let page = vm.$route.params.page || 1;
 
-      console.log('updateWindow', url, page);
-
-      if(url.indexOf("page/") >= 0) {
-        url = url.replace(/page\/(\d+)\//g,'page/' + page + '/');
+      if ((page < 2) && (url.indexOf("page/") >= 0)) {
+        url = url.replace(/\/page\/(\d+)\//g,'');
+      } else if(url.indexOf("page/") >= 0) {
+        url = url.replace(/\/page\/(\d+)\//g,'/page/' + page + '/');
       } else {
-        url += 'page/' + page + '/';
+        url += '/page/' + page + '/';
       }
 
-      console.log('updateWindow', page, url);
-
-      // window.history.pushState(page,'',url);
+      window.history.pushState(page,'',url);
     },
-    fetchArchive (page = (this.$route.params.page || 1), dir = 'replace') {
+    fetchArchive (dir, page = (this.$route.params.page || 1)) {
       const vm = this;
       vm.$http.get( '/wp-json/wp/v2/posts', {
         params: {
@@ -110,17 +107,18 @@ export default {
           switch (dir) {
             case 'prev':
               vm.$store.commit('archivePrepend', res.data);
-
               vm.page.prev--
-
+              vm.updateWindow(page);
               break;
             case 'next':
               vm.$store.commit('archiveAppend', res.data);
-
               vm.page.next = (page < pages) ? page + 1 : false
-
+              vm.updateWindow(page);
               break;
             default:
+              if (page < pages) {
+                vm.page.next = page + 1
+              }
               vm.$store.commit('archiveReplace', res.data);
           }
 

@@ -9,9 +9,10 @@ const home = {
   template: '<div>Home</div>'
 }
 
-// TODO: Account for blog being the home page
 // TODO: Search Page & Results
 // TODO: 404 page
+// TODO: Dynamic routes from post_types/rest_routes
+// TODO: Account for blog being the home page
 
 const routes = [
   // front-page

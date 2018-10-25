@@ -1,30 +1,38 @@
 <template>
   <transition appear name="slide-fade" mode="out-in">
-    <router-view v-bind:key="key" :data="post"></router-view>
+    <errors v-if="error" :data="post"></errors>
+    <router-view v-else v-bind:key="key" :data="post"></router-view>
   </transition>
 </template>
 
 <script>
 export default {
   name: 'Main',
+  components: {
+    'errors': () => import(/* webpackChunkName: "errors" */'./errors.vue')
+  },
   data() {
 		return {
-      key: 0 // used for triggering transitions
+      key: 0, // used for triggering transitions
+      error: this.$store.state.post.data || false
 		};
 	},
   watch: {
     '$route' (to, from) {
-      // fetchData if the route changes
+      // fetchPost if the route changes
       // from.matched.length means it's not the initial load
       if(from.matched.length && (to.params.slug !== this.post.slug)) {
-        this.fetchData();
+        this.fetchPost();
         this.$store.commit('archiveReplace', []);
       } else {
         // Update page title
         this.updateTitle();
       }
       this.key++; // increment key to trigger transition
-      window.scrollTo(0, 0); // scroll back to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      }); // scroll back to top
     }
   },
   computed: {
@@ -37,7 +45,7 @@ export default {
       let pageTitle = this.post.title ? this.post.title.rendered : this.post.name;
       document.title = pageTitle + ' | ' + site.name;
     },
-    fetchData () {
+    fetchPost () {
       const vm = this;
       // assign component name as default posttype
       let type = vm.$route.matched[0].components.default.name.toLowerCase();
@@ -84,9 +92,12 @@ export default {
 				params: params
 			} )
 			.then( ( res ) => {
-        vm.$store.commit('postReplace', Object.assign(res.data[0], {type: type}));
-        // Update page title
-        vm.updateTitle();
+        vm.error = !res.data.length;
+        if (!vm.error) {
+          vm.$store.commit('postReplace', Object.assign(res.data[0], {type: type}));
+          // Update page title
+          vm.updateTitle();
+        }
 			} )
 			.catch( ( res ) => {
 				console.log( `Something went wrong : ${res}` );

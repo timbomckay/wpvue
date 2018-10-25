@@ -25,12 +25,7 @@ export default {
 		return {
 
 		};
-	},
-  methods: {
-    fetchData () {
-      const vm = this;
-    }
-  }
+	}
 }
 </script>
 

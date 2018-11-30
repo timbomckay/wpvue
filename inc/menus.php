@@ -39,20 +39,80 @@ function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {
 
   // get home_url to detect internal links
   $home_url = home_url();
+  // get blog slug to check url
+  $blog_slug = get_post_field( 'post_name', get_option( 'page_for_posts' ) );
+
+  $page_map = ['slug', 'parent', 'grand', 'great', 'ancestor'];
+  $post_map = ['slug', 'taxonomy'];
+
   // convert output if item url is internal
   if ( (strpos($item->url,$home_url) !== false) || (substr($item->url, 0, strlen("/")) === "/") ) {
-    // change opening anchor tag to router-link
-    $item_output = str_replace('<a ', '<router-link class="nav-link" ', $item_output);
-    // change closing anchor tag to router-link
-    $item_output = str_replace('</a>', '</router-link>', $item_output);
-    // change href to specify the link by passing the `to` prop
-    $item_output = str_replace('href', 'to', $item_output);
-    // remove base url
-    $item_output = str_replace($home_url, '', $item_output);
-    if(!strpos($item_output,'to="/"')){
-      // remove trailing slash
-      $item_output = str_replace('/"', '"', $item_output);
+    // <router-link :to="{ name: 'page', params: { slug: 'test', id: 123 }}">Page</router-link>
+
+    // remove home_url from links
+    $url = str_replace($home_url, '', $item->url);
+    $path = array_reverse(array_filter(explode('/', $url)));
+
+    switch ($item->object) {
+      case 'page':
+        $name = $item->object;
+
+        if (!$path[0]) {
+          $name = 'home';
+        } elseif ($path[0] === $blog_slug) {
+          $name = 'blog';
+        }
+
+        // reassign keys to router map
+        foreach ($path as $k => $v) {
+          if (is_int($k)) {
+            $path[$page_map[$k]] = $v;
+          }
+          unset($path[$k]);
+        }
+
+        // assign ID to path parameters
+        $path['id'] = $item->object_id;
+
+        // stringify the object
+        $params = str_replace('"', "'", json_encode((object)$path));
+
+        // assign link
+        $link = ":to=\"{ name: '$name', params: $params}\"";
+        break;
+
+      case 'post':
+        // reassign keys to router map
+        foreach ($path as $k => $v) {
+          if (is_int($k)) {
+            $path[$page_map[$k]] = $v;
+          }
+          unset($path[$k]);
+        }
+        // stringify the object
+        $params = str_replace('"', "'", json_encode((object)$path));
+        // assign link
+        $link = ":to=\"{ name: 'post', params: $params}\"";
+        break;
+
+      default:
+        // assign link
+        $link = "to=\"$url\"";
+        break;
     }
+
+    $item_output = "<router-link class=\"nav-link\" $link>$item->title</router-link>";
+
+    // echo '<pre>';
+    // print_r([
+    //   // 'args' => $args,
+    //   'path' => $path['slug'],
+    //   'item:object' => $item->object,
+    //   'pathParams' => isset($params) ? $params : false,
+    //   'item_output' => htmlentities($item_output)
+    // ]);
+    // echo '</pre>';
+
   } else {
     // link is external, open in new tab
     $item_output = str_replace('<a href', '<a target="_new" href', $item_output);

@@ -58,8 +58,15 @@ function localize_script() {
       'nonce' => wp_create_nonce( 'wp_rest' ),
       'name'	=> get_bloginfo( 'name' ),
 			'baseURL' => get_option( 'home' ),
-			'home'	=> get_post_field( 'post_name', get_option( 'page_on_front' ) ),
-			'blog'	=> get_post_field( 'post_name', get_option( 'page_for_posts' ) ),
+			'permalinks' => get_option( 'permalink_structure' ),
+			'home'	=> (object) [
+				'id' => get_option( 'page_on_front' ),
+				'slug' => get_post_field( 'post_name', get_option( 'page_on_front' ) )
+			],
+			'blog' => (object) [
+				'id' => get_option( 'page_for_posts' ),
+				'slug' => get_post_field( 'post_name', get_option( 'page_for_posts' ) )
+			],
 			'post' => $rest_post,
 			'archive' => isset($rest_archive) ? $rest_archive : [],
 			'rest_routes' => (object) $rest_routes

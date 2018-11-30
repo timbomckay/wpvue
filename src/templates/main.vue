@@ -1,11 +1,12 @@
 <template>
   <transition appear name="slide-fade" mode="out-in">
-    <errors v-if="error" :data="post"></errors>
-    <router-view v-else v-bind:key="key" :data="post"></router-view>
+    <errors v-if="!post.title"></errors>
+    <router-view v-else v-bind:key="key"></router-view>
   </transition>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
   name: 'Main',
   components: {
@@ -14,95 +15,33 @@ export default {
   data() {
 		return {
       key: 0, // used for triggering transitions
-      error: this.$store.state.post.data || false
+      error: this.$store.state.post.data || false // TODO: Switch error to state with store mutation
 		};
 	},
   watch: {
     '$route' (to, from) {
+      // console.log(to);
       // fetchPost if the route changes
       // from.matched.length means it's not the initial load
-      if(from.matched.length && (to.params.slug !== this.post.slug)) {
-        this.fetchPost();
+      if((from.matched.length && (to.params.slug !== this.post.slug)) || !this.post.id) {
+        // this.fetchPost();
+        this.fetchData(to);
         this.$store.commit('archiveReplace', []);
-      } else {
-        // Update page title
-        this.updateTitle();
       }
-      this.key++; // increment key to trigger transition
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      }); // scroll back to top
+
+      // increment key to trigger transition
+      this.key++;
     }
   },
   computed: {
-    post () {
-      return this.$store.state.post
-    }
+    ...mapState([
+     'post'
+    ])
   },
   methods: {
-    updateTitle () {
-      let pageTitle = this.post.title ? this.post.title.rendered : this.post.name;
-      document.title = pageTitle + ' | ' + site.name;
-    },
-    fetchPost () {
-      const vm = this;
-      // assign component name as default posttype
-      let type = vm.$route.matched[0].components.default.name.toLowerCase();
-      // assign default parameters
-      let params = {
-        slug: vm.$route.params.slug || false
-      }
-
-      // TODO: Remove this in favor of new site.rest_routes
-      function checkPostType (name) {
-
-        const names = {
-          'front-page': function () {
-            type = 'pages';
-            params.slug = site.home
-          },
-          'category': function () {
-            type = 'categories';
-          },
-          'tag': function () {
-            type = 'tags';
-          },
-          'archive': function () {
-
-            if(!params.slug) {
-              type = 'pages'
-              params.slug = site.blog
-            } else {
-              names[vm.$route.params.taxonomy]();
-            }
-
-          }
-        };
-
-        // run function if name is listed
-        if(names[name]) {
-          names[name]();
-        }
-
-        return type;
-      }
-
-			vm.$http.get( '/wp-json/wp/v2/' + checkPostType(type), {
-				params: params
-			} )
-			.then( ( res ) => {
-        vm.error = !res.data.length;
-        if (!vm.error) {
-          vm.$store.commit('postReplace', Object.assign(res.data[0], {type: type}));
-          // Update page title
-          vm.updateTitle();
-        }
-			} )
-			.catch( ( res ) => {
-				console.log( `Something went wrong : ${res}` );
-			} );
-    }
+    ...mapActions([
+      'fetchData'
+    ])
   }
 }
 </script>

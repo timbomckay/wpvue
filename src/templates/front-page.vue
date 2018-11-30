@@ -1,22 +1,18 @@
 <template>
-  <transition name="slide-fade" mode="out-in">
+  <div>
     <div>Home</div>
-  </transition>
+    <div v-html="post.content.rendered"></div>
+  </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'Front-Page',
-  props: ['data'],
-  data() {
-		return {
-
-		};
-	},
-  methods: {
-    fetchData () {
-      const vm = this;
-    }
+  computed: {
+    ...mapState([
+     'post'
+    ])
   }
 }
 </script>

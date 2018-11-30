@@ -6,9 +6,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'Error',
-  props: ['data']
+  computed: {
+    ...mapState([
+     'post'
+    ])
+  }
 }
 </script>
 

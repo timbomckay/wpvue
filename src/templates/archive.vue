@@ -2,8 +2,8 @@
   <div>
     <h1 v-text="title" />
     <div
-      v-if="data.content"
-      v-html="data.content.rendered" />
+      v-if="post.content"
+      v-html="post.content.rendered" />
     <div v-if="archive">
       <button
         v-if="page.prev"
@@ -28,12 +28,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'Archive',
-  props: ['data'],
   data() {
     return {
-      title: this.data.name || this.data.title.rendered || 'Archive',
       page: {
         prev: this.$route.params.page ? Number(this.$route.params.page) - 1 : 0,
         next: false
@@ -41,9 +40,12 @@ export default {
     };
   },
   computed: {
-    archive () {
-      return this.$store.state.archive
-    }
+    ...mapState([
+     'post', 'archive', 'rest_routes', 'baseURL'
+   ]),
+   title: function () {
+     return this.post.name || this.post.title.rendered || 'Archive';
+   }
   },
   created () {
     if (!this.archive.length) {
@@ -51,12 +53,12 @@ export default {
     }
 
     // initial instance, check for total pages to be more than 1
-    if (this.data.pages && (this.data.pages > 1)) {
+    if (this.post.pages && (this.post.pages > 1)) {
       if (this.$route.params.page) {
-        if (this.$route.params.page === this.data.pages) {
+        if (this.$route.params.page === this.post.pages) {
           this.page.next = false
         }
-        if (this.$route.params.page < this.data.pages) {
+        if (this.$route.params.page < this.post.pages) {
           // if current page is more than 1 and less than total pages
           this.page.next = Number(this.$route.params.page) + 1
         }
@@ -75,7 +77,7 @@ export default {
       this.$store.commit('postReplace', post);
     },
     convertLink (url) {
-      return url.replace(site.baseURL,'');
+      return url.replace(this.baseURL,'');
     },
     updateWindow (page) {
       let vm = this;
@@ -90,12 +92,14 @@ export default {
       }
 
       window.history.pushState(page,'',url);
+
+      // TODO: ScrollTo New Section
     },
     fetchArchive (dir, page = (this.$route.params.page || 1)) {
       const vm = this;
       vm.$http.get( '/wp-json/wp/v2/posts', {
         params: {
-          [site.rest_routes['taxonomies'][vm.$route.params.taxonomy]]: vm.data.id, // this is ignored on index/blog page
+          [vm.rest_routes['taxonomies'][vm.$route.params.taxonomy]]: vm.post.id, // this is ignored on index/blog page
           page: page
         }
       } )

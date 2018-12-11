@@ -52,7 +52,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue')
   }, {
     name: 'page',
-    path: '/(:ancestor/)?(:great/)?(:grand/)?(:parent/)?:slug',
+    path: '/:ancestor?/:great?/:grand?/:parent?/:slug',
     meta: { route: 'pages' },
     component: () => import(/* webpackChunkName: "page" */'./templates/pages.vue')
   }

@@ -27,14 +27,19 @@ const actions = {
     // console.log('route:params', route.params);
     // console.log('state:rest_routes', state.rest_routes);
     const SINGLE = route.meta.route || '';
-    const ID = route.params.id || route.meta.id || '';
-    const SLUG = route.params.slug || route.meta.slug || '';
 
     if (SINGLE) {
+      const ID = route.params.id || route.meta.id || '';
+      const SLUG = route.params.slug || route.meta.slug || '';
+
+      let params = {};
+
+      if(!ID && SLUG) {
+        params.slug = SLUG
+      }
+
       axios.get( `/wp-json/wp/v2/${SINGLE}/${ID}`, {
-        params: {
-          slug: (!ID && SLUG) ? SLUG : false
-        }
+        params: params
       } )
       .then( ( res ) => {
         commit('postReplace', res.data.length ? res.data[0] : res.data);
@@ -45,7 +50,8 @@ const actions = {
       } );
     }
 
-    const ARCHIVE = route.meta.archive || '';
+    const ARCHIVE = route.meta.archive || false;
+    
     if (ARCHIVE) {
       axios.get( `/wp-json/wp/v2/${ARCHIVE}`, {
         params: {}

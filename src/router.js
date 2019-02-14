@@ -4,13 +4,19 @@ import store from './store/index.js';
 
 Vue.use(VueRouter);
 
+const templates = {
+  home: () => import(/* webpackChunkName: "front-page" */'./templates/front-page.vue'),
+  archive: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue'),
+  posts: () => import(/* webpackChunkName: "posts" */'./templates/posts.vue'),
+  pages: () => import(/* webpackChunkName: "pages" */'./templates/pages.vue')
+}
+
 const BLOG_URL = site.blog.slug
 
 // TODO: 404 page
 // TODO: Search Page & Results
 // TODO: Dynamic routes from post_types/rest_routes
 // TODO: Account for blog being the home page
-// TODO: Child Routes
 
 const routes = [
   { // front-page
@@ -20,43 +26,60 @@ const routes = [
       route: 'pages',
       id: site.home.id
     },
-    component: () => import(/* webpackChunkName: "front-page" */'./templates/front-page.vue')
-  }, { // blog pages
-    name: 'blog',
-    path: `/${BLOG_URL}`,
-    meta: {
-      route: 'pages',
-      archive: 'posts',
-      id: site.blog.id
-    },
-    component: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue')
-  }, {
-    path: `/${BLOG_URL}/page/:page(\\d+)?`,
-    meta: {
-      route: 'posts',
-      archive: 'posts'
-    },
-    component: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue')
-  }, {
-    name: 'post',
-    path: `/${BLOG_URL}/:slug`,
-    meta: { route: 'posts' },
-    component: () => import(/* webpackChunkName: "post" */'./templates/posts.vue')
-  }, {
-    path: `/${BLOG_URL}/:taxonomy/:slug`,
-    meta: { route: 'posts' },
-    component: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue')
-  }, {
-    path: `/${BLOG_URL}/:taxonomy/:slug/page/:page(\\d+)?`,
-    meta: { route: 'posts' },
-    component: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue')
-  }, {
-    name: 'page',
-    path: '/:ancestor?/:great?/:grand?/:parent?/:slug',
-    meta: { route: 'pages' },
-    component: () => import(/* webpackChunkName: "page" */'./templates/pages.vue')
+    component: templates.home
   }
 ];
+
+// Blog Permalink Based Routes
+
+site.permalinks
+  .replace('%postname%', ':slug') // rename postname to slug
+  .replace('%post_id%', ':id') // rename post_id to id
+  .replace(/\/%/g, '/:') // replace first % of each param with vue-router syntax
+  .replace(/%\//g, '/') // remove closing % of each param
+  .split('/') // create array of url parameters
+  .filter(x => x) // remove empty values
+  .forEach((p, i, arr) => {
+    let params = arr.slice().reverse().slice(i).reverse();
+      params = `/${params.join('/')}/`;
+
+    const route = {
+      component: templates[!i ? 'posts' : 'archive'],
+      meta: {
+        route: 'posts',
+        archive: !i ? false : 'posts'
+      }
+    }
+
+    routes.push(Object.assign({
+      path: `${params}page/:page(\\d+)/`
+    }, route));
+
+    if (!i) {
+      route.name = 'post';
+    }
+
+    if (i + 1 === arr.length) {
+      route.name = 'blog';
+      route.component = templates.pages;
+      route.meta.route = 'pages';
+      route.meta.id = site.blog.id;
+    }
+
+    routes.push(Object.assign({
+      path: params
+    }, route));
+  });
+
+
+// Pages
+
+routes.push({
+  name: 'page',
+  path: '/:ancestor?/:great?/:grand?/:parent?/:slug',
+  meta: { route: 'pages' },
+  component: templates.pages
+});
 
 const router = new VueRouter({
   mode: 'history',

@@ -79,9 +79,11 @@ function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {
 
         // assign link
         $link = ":to=\"{ name: '$name', params: $params}\"";
+
         break;
 
       case 'post':
+
         // reassign keys to router map
         foreach ($path as $k => $v) {
           if (is_int($k)) {
@@ -89,10 +91,16 @@ function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {
           }
           unset($path[$k]);
         }
+
+        // assign ID to path parameters
+        $path['id'] = $item->object_id;
+
         // stringify the object
         $params = str_replace('"', "'", json_encode((object)$path));
+
         // assign link
         $link = ":to=\"{ name: 'post', params: $params}\"";
+
         break;
 
       default:
@@ -103,15 +111,20 @@ function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {
 
     $item_output = "<router-link class=\"nav-link\" $link>$item->title</router-link>";
 
-    // echo '<pre>';
-    // print_r([
-    //   // 'args' => $args,
-    //   'path' => $path['slug'],
-    //   'item:object' => $item->object,
-    //   'pathParams' => isset($params) ? $params : false,
-    //   'item_output' => htmlentities($item_output)
-    // ]);
-    // echo '</pre>';
+    echo '<pre>';
+    print_r([
+      // 'args' => $args,
+      'path' => $path['slug'],
+      'item' => [
+        'object' => $item->object,
+        'type' => $item->type,
+        'title' => $item->title,
+        'url' => $item->url
+      ],
+      'pathParams' => isset($params) ? $params : false,
+      'item_output' => htmlentities($item_output)
+    ]);
+    echo '</pre>';
 
   } else {
     // link is external, open in new tab

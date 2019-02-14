@@ -51,7 +51,7 @@ const actions = {
     }
 
     const ARCHIVE = route.meta.archive || false;
-    
+
     if (ARCHIVE) {
       axios.get( `/wp-json/wp/v2/${ARCHIVE}`, {
         params: {}

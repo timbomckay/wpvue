@@ -111,20 +111,20 @@ function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {
 
     $item_output = "<router-link class=\"nav-link\" $link>$item->title</router-link>";
 
-    echo '<pre>';
-    print_r([
-      // 'args' => $args,
-      'path' => $path['slug'],
-      'item' => [
-        'object' => $item->object,
-        'type' => $item->type,
-        'title' => $item->title,
-        'url' => $item->url
-      ],
-      'pathParams' => isset($params) ? $params : false,
-      'item_output' => htmlentities($item_output)
-    ]);
-    echo '</pre>';
+    // echo '<pre>';
+    // print_r([
+    //   // 'args' => $args,
+    //   'path' => $path['slug'],
+    //   'item' => [
+    //     'object' => $item->object,
+    //     'type' => $item->type,
+    //     'title' => $item->title,
+    //     'url' => $item->url
+    //   ],
+    //   'pathParams' => isset($params) ? $params : false,
+    //   'item_output' => htmlentities($item_output)
+    // ]);
+    // echo '</pre>';
 
   } else {
     // link is external, open in new tab

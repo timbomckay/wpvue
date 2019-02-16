@@ -9,7 +9,7 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-  name: 'Pages',
+  name: 'Page',
   mounted: function () {
     let vm = this;
     document.querySelectorAll(".content a").forEach(function(link) {

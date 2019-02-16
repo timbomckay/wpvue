@@ -35,6 +35,7 @@ function localize_script() {
 
 		// set route to post_type
 		$route = $rest_routes['post_types'][$wp_query->queried_object->post_type];
+		
 		// if no route, assign to author or taxonomy
 		if(!$route) {
 			$route = is_author() ? 'users' : $rest_routes['taxonomies'][$wp_query->queried_object->taxonomy];

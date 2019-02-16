@@ -4,34 +4,51 @@ import store from './store/index.js';
 
 Vue.use(VueRouter);
 
+const BLOG_URL = site.blog ? `/${site.blog.slug}/` : '/';
+
 const templates = {
   home: () => import(/* webpackChunkName: "front-page" */'./templates/front-page.vue'),
   archive: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue'),
-  posts: () => import(/* webpackChunkName: "posts" */'./templates/posts.vue'),
-  pages: () => import(/* webpackChunkName: "pages" */'./templates/pages.vue')
+  post: () => import(/* webpackChunkName: "post" */'./templates/post.vue'),
+  page: () => import(/* webpackChunkName: "page" */'./templates/page.vue')
 }
-
-const BLOG_URL = site.blog.slug
 
 // TODO: 404 page
 // TODO: Search Page & Results
 // TODO: Dynamic routes from post_types/rest_routes
 // TODO: Account for blog being the home page
 
-const routes = [
-  { // front-page
-    name: 'home',
-    path: '/',
-    meta: {
-      route: 'pages',
-      id: site.home.id
-    },
-    component: templates.home
+const routes = [{ // front-page
+  name: 'home',
+  path: '/',
+  component: templates.home,
+  meta: {
+    route: 'pages',
+    id: site.home.id
   }
-];
+}];
 
-// Blog Permalink Based Routes
+// Archives
+[ 'category/:slug',
+  'tag/:slug',
+  'author/:slug',
+  ':year([0-9]{4})/:month([0-9]{1,2})/:day([0-9]{1,2})', // Year Month Day Archive
+  ':year([0-9]{4})/:month([0-9]{1,2})', // Year Month Archive
+  ':year([0-9]{4})' // Year Archive
+].forEach((x,i) => {
+  const names = ['category', 'tag', 'author', 'day', 'month', 'year']
+  routes.push({
+    name: `archive-${names[i]}`,
+    path: BLOG_URL + x,
+    component: templates.archive,
+    meta: {
+      route: 'posts',
+      archive: 'posts'
+    }
+  });
+});
 
+// Permalink Based Routes
 site.permalinks
   .replace('%postname%', ':slug') // rename postname to slug
   .replace('%post_id%', ':id') // rename post_id to id
@@ -41,44 +58,53 @@ site.permalinks
   .filter(x => x) // remove empty values
   .forEach((p, i, arr) => {
     let params = arr.slice().reverse().slice(i).reverse();
-      params = `/${params.join('/')}/`;
 
     const route = {
-      component: templates[!i ? 'posts' : 'archive'],
+      name: params.join('-').replace(/:/g, ''),
+      path: `/${params.join('/')}/`,
+      component: templates.archive,
       meta: {
         route: 'posts',
-        archive: !i ? false : 'posts'
+        archive: 'posts'
       }
     }
 
-    routes.push(Object.assign({
-      path: `${params}page/:page(\\d+)/`
-    }, route));
-
+    // single article --> i = 0
     if (!i) {
       route.name = 'post';
+      route.meta.archive = false;
     }
 
-    if (i + 1 === arr.length) {
-      route.name = 'blog';
-      route.component = templates.pages;
+    // blog at root
+    if (BLOG_URL && (i + 1 === arr.length)) {
       route.meta.route = 'pages';
       route.meta.id = site.blog.id;
     }
 
-    routes.push(Object.assign({
-      path: params
-    }, route));
+    routes.push(route);
   });
 
+// Search Results
+routes.push({
+  name: 'search',
+  path: '/search/:q',
+  component: templates.archive
+});
 
 // Pages
-
 routes.push({
   name: 'page',
   path: '/:ancestor?/:great?/:grand?/:parent?/:slug',
   meta: { route: 'pages' },
-  component: templates.pages
+  component: templates.page
+});
+
+// Paginate Routes
+routes.slice().forEach((e,i,arr) => {
+  const route = Object.assign({}, e);
+  route.name = `${e.name}-paged`;
+  route.path = `${e.path}page/:page(\\d+)/`;
+  routes.splice(i * 2, 0, route);
 });
 
 const router = new VueRouter({

@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const BLOG_URL = site.blog ? `/${site.blog.slug}/` : '/';
 
 const templates = {
-  home: () => import(/* webpackChunkName: "front-page" */'./templates/front-page.vue'),
+  home: () => import(/* webpackChunkName: "home" */'./templates/home.vue'),
   archive: () => import(/* webpackChunkName: "archive" */'./templates/archive.vue'),
   post: () => import(/* webpackChunkName: "post" */'./templates/post.vue'),
   page: () => import(/* webpackChunkName: "page" */'./templates/page.vue')
@@ -42,14 +42,14 @@ const routes = [{ // front-page
     path: BLOG_URL + x,
     component: templates.archive,
     meta: {
-      route: 'posts',
+      // route: 'posts',
       archive: 'posts'
     }
   });
 });
 
 // Permalink Based Routes
-site.permalinks
+site.permalinks.base
   .replace('%postname%', ':slug') // rename postname to slug
   .replace('%post_id%', ':id') // rename post_id to id
   .replace(/\/%/g, '/:') // replace first % of each param with vue-router syntax
@@ -64,7 +64,7 @@ site.permalinks
       path: `/${params.join('/')}/`,
       component: templates.archive,
       meta: {
-        route: 'posts',
+        // route: 'posts',
         archive: 'posts'
       }
     }
@@ -72,6 +72,7 @@ site.permalinks
     // single article --> i = 0
     if (!i) {
       route.name = 'post';
+      route.meta.route = 'posts';
       route.meta.archive = false;
     }
 

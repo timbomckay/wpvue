@@ -54,7 +54,9 @@ const actions = {
 
     if (ARCHIVE) {
       axios.get( `/wp-json/wp/v2/${ARCHIVE}`, {
-        params: {}
+        params: {
+          '_fields': 'title,id,link,type,excerpt,featured_image,modified'
+        }
       } )
       .then( ( res ) => {
         // send to state.archive

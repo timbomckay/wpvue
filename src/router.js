@@ -24,25 +24,27 @@ const routes = [{ // front-page
   component: templates.home,
   meta: {
     route: 'pages',
-    id: site.home.id
+    id: site.home.id,
+    slug: site.home.slug
   }
 }];
 
-// Archives
-[ 'category/:slug',
-  'tag/:slug',
-  'author/:slug',
-  ':year([0-9]{4})/:month([0-9]{1,2})/:day([0-9]{1,2})', // Year Month Day Archive
-  ':year([0-9]{4})/:month([0-9]{1,2})', // Year Month Archive
-  ':year([0-9]{4})' // Year Archive
+// Date Archives
+[ 'category/:slug/',
+  'tag/:slug/',
+  'author/:slug/',
+  ':year([0-9]{4})/:month([0-9]{1,2})/:day([0-9]{1,2})/', // Year Month Day Archive
+  ':year([0-9]{4})/:month([0-9]{1,2})/', // Year Month Archive
+  ':year([0-9]{4})/' // Year Archive
 ].forEach((x,i) => {
-  const names = ['category', 'tag', 'author', 'day', 'month', 'year']
+  const names = ['category', 'tag', 'author', 'day', 'month', 'year'];
+  const taxRoutes = ['categories', 'tags', 'users'];
   routes.push({
     name: `archive-${names[i]}`,
     path: BLOG_URL + x,
     component: templates.archive,
     meta: {
-      // route: 'posts',
+      route: taxRoutes[i] || false,
       archive: 'posts'
     }
   });
@@ -57,29 +59,30 @@ site.permalinks.base
   .split('/') // create array of url parameters
   .filter(x => x) // remove empty values
   .forEach((p, i, arr) => {
-    let params = arr.slice().reverse().slice(i).reverse();
+    let params = arr.slice(0, i + 1);
 
     const route = {
       name: params.join('-').replace(/:/g, ''),
       path: `/${params.join('/')}/`,
       component: templates.archive,
       meta: {
-        // route: 'posts',
         archive: 'posts'
       }
     }
 
     // single article --> i = 0
-    if (!i) {
+    if (i + 1 === arr.length) {
       route.name = 'post';
+      route.component = templates.post;
       route.meta.route = 'posts';
       route.meta.archive = false;
     }
 
     // blog at root
-    if (BLOG_URL && (i + 1 === arr.length)) {
+    if (BLOG_URL && !i) {
       route.meta.route = 'pages';
       route.meta.id = site.blog.id;
+      route.meta.slug = site.blog.slug;
     }
 
     routes.push(route);
@@ -88,14 +91,14 @@ site.permalinks.base
 // Search Results
 routes.push({
   name: 'search',
-  path: '/search/:q',
+  path: '/search/:q/',
   component: templates.archive
 });
 
 // Pages
 routes.push({
   name: 'page',
-  path: '/:ancestor?/:great?/:grand?/:parent?/:slug',
+  path: '/:ancestor?/:great?/:grand?/:parent?/:slug/',
   meta: { route: 'pages' },
   component: templates.page
 });
@@ -107,6 +110,9 @@ routes.slice().forEach((e,i,arr) => {
   route.path = `${e.path}page/:page(\\d+)/`;
   routes.splice(i * 2, 0, route);
 });
+
+// enforce trailing slash
+routes.map(x => x.pathToRegexpOptions = { strict: true } );
 
 const router = new VueRouter({
   mode: 'history',

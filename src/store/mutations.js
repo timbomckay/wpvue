@@ -18,16 +18,30 @@ const mutations = {
     state.post = Object.assign(state.post, data);
   },
   postReplace (state, data) {
-    state.post = data;
+    if (data.id === state.post.id) {
+      state.post = Object.assign(state.post, data);
+    } else {
+      state.post = data;
+    }
+  },
+  archiveReset (state) {
+    state.archive = {
+      posts: [],
+      page: null,
+      total: null,
+      totalpages: null
+    };
   },
   archiveReplace (state, data) {
     state.archive = data;
   },
   archiveAppend (state, data) {
-    state.archive = state.archive.concat(data);
+    state.archive.page += 1;
+    state.archive.posts = state.archive.posts.concat(data);
   },
   archivePrepend (state, data) {
-    state.archive = data.concat(state.archive);
+    state.archive.page -= 1;
+    state.archive.posts = data.concat(state.archive.posts);
   }
 }
 

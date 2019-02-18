@@ -1,6 +1,6 @@
 <template>
   <transition appear name="slide-fade" mode="out-in">
-    <errors v-if="!post.title"></errors>
+    <errors v-if="error"></errors>
     <router-view v-else v-bind:key="key"></router-view>
   </transition>
 </template>
@@ -15,18 +15,15 @@ export default {
   data() {
 		return {
       key: 0, // used for triggering transitions
-      error: this.$store.state.post.data || false // TODO: Switch error to state with store mutation
+      error: !(this.$store.state.post || this.$store.state.archive) // TODO: Switch error to state with store mutation
 		};
 	},
   watch: {
     '$route' (to, from) {
-      // console.log(to);
       // fetchPost if the route changes
       // from.matched.length means it's not the initial load
-      if((from.matched.length && (to.params.slug !== this.post.slug)) || !this.post.id) {
-        // this.fetchPost();
+      if(from.matched.length) {
         this.fetchData(to);
-        this.$store.commit('archiveReplace', []);
       }
 
       // increment key to trigger transition

@@ -1,5 +1,5 @@
 <template>
-  <article class="content">
+  <article v-if="post.title" class="content">
     <img v-if="post.featured_image" :src="post.featured_image.full.url" :width="post.featured_image.full.width" :height="post.featured_image.full.height" />
     <h1>{{ post.title.rendered }}</h1>
     <div v-html="post.content.rendered"></div>

@@ -1,34 +1,27 @@
 <template>
-  <div>
+  <div v-if="title">
     <h1 v-text="title" />
     <div
       v-if="post.content"
       v-html="post.content.rendered" />
-    <div v-if="archive">
-      <button
-        v-if="page.prev"
-        @click="fetchArchive('prev', page.prev)">Load Previous Page</button>
-      <div v-for="post in archive">
-        <img
-          v-if="post.featured_image"
+    <div v-if="archive.posts">
+      <button @click="fetchArchive({route: $route, dir: 'archivePrepend'})">Load Previous Page</button>
+      <div v-for="post in archive.posts">
+        <img v-if="post.featured_image.medium.url"
           :src="post.featured_image.medium.url"
           :width="post.featured_image.medium.width"
-          :height="post.featured_image.medium.height">
+          :height="post.featured_image.medium.height" />
         <h2 v-text="post.title.rendered" />
         <div v-html="post.excerpt.rendered" />
-        <router-link
-          :to="convertLink(post.link)"
-          @click.native="postReplace(post)">View Post</router-link>
+        <router-link :to="convertLink(post.link)" @click.native="$store.commit('postReplace', post)">View Post</router-link>
       </div>
-      <button
-        v-if="page.next"
-        @click="fetchArchive('next', page.next)">Load More</button>
+      <button @click="fetchArchive({route: $route, dir: 'archiveAppend'})">Load Next Page</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 export default {
   name: 'Archive',
   data() {
@@ -44,14 +37,18 @@ export default {
      'post', 'archive', 'rest_routes', 'baseURL'
    ]),
    title: function () {
-     return this.post.name || this.post.title.rendered || 'Archive';
+     if (this.post.name) {
+       return this.post.name
+     }
+
+     if (this.post.title) {
+       return this.post.title.rendered
+     }
+
+     return 'Archive';
    }
   },
   created () {
-    if (!this.archive.length) {
-      this.fetchArchive();
-    }
-
     // initial instance, check for total pages to be more than 1
     if (this.post.pages && (this.post.pages > 1)) {
       if (this.$route.params.page) {
@@ -70,14 +67,14 @@ export default {
   },
   beforeDestroy() {
     // empty the archive
-    // this.$store.commit('archiveReplace', false);
+    // this.$store.commit('archiveReplace', []);
   },
   methods: {
-    postReplace (post) {
-      this.$store.commit('postReplace', post);
-    },
-    convertLink (url) {
-      return url.replace(this.baseURL,'');
+    ...mapActions([
+      'fetchArchive'
+    ]),
+    convertLink (link) {
+      return link.replace(this.baseURL,'');
     },
     updateWindow (page) {
       let vm = this;
@@ -95,42 +92,6 @@ export default {
 
       // TODO: ScrollTo New Section
     },
-    fetchArchive (dir, page = (this.$route.params.page || 1)) {
-      const vm = this;
-      vm.$http.get( '/wp-json/wp/v2/posts', {
-        params: {
-          [vm.rest_routes['taxonomies'][vm.$route.params.taxonomy]]: vm.post.id, // this is ignored on index/blog page
-          page: page
-        }
-      } )
-        .then( ( res ) => {
-          const pages = Number(res.headers['x-wp-totalpages']);
-
-          vm.$store.commit('postMerge', {pages: pages});
-
-          switch (dir) {
-            case 'prev':
-              vm.$store.commit('archivePrepend', res.data);
-              vm.page.prev--
-              vm.updateWindow(page);
-              break;
-            case 'next':
-              vm.$store.commit('archiveAppend', res.data);
-              vm.page.next = (page < pages) ? page + 1 : false
-              vm.updateWindow(page);
-              break;
-            default:
-              if (page < pages) {
-                vm.page.next = page + 1
-              }
-              vm.$store.commit('archiveReplace', res.data);
-          }
-
-        } )
-        .catch( ( res ) => {
-          console.log( `Something went wrong : ${res}` );
-      } );
-    }
   },
 }
 </script>

@@ -20,5 +20,6 @@ new Vue({
 });
 
 new Vue({
-  router: Router
+  router: Router,
+  store
 }).$mount('#site-navigation');

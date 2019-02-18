@@ -43,131 +43,22 @@ function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {
   $blog_slug = get_post_field( 'post_name', get_option( 'page_for_posts' ) );
 
   // convert output if item url is internal
-  if ( (strpos($item->url,$home_url) !== false) || (substr($item->url, 0, strlen("/")) === "/") ) {
-    // <router-link :to="{ name: 'page', params: { slug: 'test', id: 123 }}">Page</router-link>
+  $isIntertnal = strpos($item->url,$home_url) !== false;
+  $isRelative = substr($item->url, 0, strlen("/")) === "/";
 
+  if ( $isIntertnal || $isRelative ) {
     // remove home_url from links
-    $url = str_replace($home_url, '', $item->url);
-    $path = array_reverse(array_filter(explode('/', $url)));
+    $link = str_replace($home_url, '', $item->url);
 
-    switch ($item->object) {
-      case 'page':
-        $name = $item->object;
+    $click = '';
 
-        if (!$path[0]) {
-          $name = 'home';
-        }
-
-        if ($path[0] === $blog_slug) {
-          $name = 'blog';
-        }
-
-        // reassign keys to router map
-        $permalinks = ['slug', 'parent', 'grand', 'great', 'ancestor'];
-
-        // reassign keys to router map
-        foreach ($path as $k => $v) {
-          if($permalinks[$k]) {
-            $params[$permalinks[$k]] = $v;
-          }
-        }
-
-        // assign ID to path parameters
-        $params['id'] = $item->object_id;
-
-        // stringify the object
-        $params = str_replace('"', "'", json_encode((object)$params));
-
-        // assign link
-        $link = ":to=\"{ name: '$name', params: $params}\"";
-
-        break;
-
-      case 'post':
-
-        $permalinks = str_replace("/$blog_slug", '', get_option( 'permalink_structure' ));
-        $permalinks = str_replace("%postname%", 'slug', $permalinks); // rename postname to slug
-        $permalinks = str_replace("%post_id%", 'id', $permalinks); // rename post_id to id
-        $permalinks = str_replace("%", '', $permalinks); // remove % of each param
-        $permalinks = array_filter(explode('/', $permalinks)); // create array of url parameters
-        $permalinks = array_reverse($permalinks); // cycle through in reverse
-
-        // reassign keys to router map
-        foreach ($path as $k => $v) {
-          // TODO: Remove 'blog' & 'category' from $path array
-          if($permalinks[$k]) {
-            $params[$permalinks[$k]] = $v;
-          }
-        }
-
-        // assign ID to path parameters
-        $params['id'] = $item->object_id;
-
-        // stringify params
-        $params = str_replace('"', "'", json_encode((object)$params));
-
-        // assign link
-        $link = ":to=\"{ name: 'post', params: $params}\"";
-
-        break;
-
-      case 'category':
-
-        if($permalinks = get_option( 'category_base' )) {
-          $permalinks = str_replace("%", '', $permalinks); // remove % of each param
-          $permalinks = array_filter(explode('/', $permalinks)); // create array of url parameters
-          $permalinks = array_reverse($permalinks); // cycle through in reverse
-        } else {
-          $permalinks = ['slug'];
-        }
-
-       // TODO: Account for sub-categories
-
-        // reassign keys to router map
-        foreach ($path as $k => $v) {
-           // TODO: Remove 'blog' & 'category' from $path array
-          if($permalinks[$k]) {
-            $params[$permalinks[$k]] = $v;
-          }
-        }
-
-        // assign ID to path parameters
-        $params['id'] = $item->object_id;
-
-        // stringify params
-        $params = str_replace('"', "'", json_encode((object)$params));
-
-        // assign link
-        $link = ":to=\"{ name: 'archive-category', params: $params}\"";
-
-        // echo '<pre>';
-        // print_r([
-        //   'permalinks' => $permalinks,
-        //   'item' => [
-        //     'path' => $path,
-        //     'slug' => $path['slug'],
-        //     'object' => $item->object,
-        //     'type' => $item->type,
-        //     'title' => $item->title,
-        //     'url' => $url
-        //   ],
-        //   'pathParams' => isset($params) ? $params : false
-        // ]);
-        // echo '</pre>';
-
-        break;
-
-      default:
-        // DON'T CONVERT CUSTOM LINKS
-        // IT'S TOO MUCH GUESSING
-
-        // assign link
-        $link = "to=\"$url\"";
-        break;
+    if($item->object !== 'custom') {
+      // pass ID to the store
+      $store = "\"\$store.commit('postReplace', {id: $item->object_id})\"";
+      $click = "@click.native=$store";
     }
 
-    $item_output = "<router-link class=\"nav-link\" $link>$item->title</router-link>";
-
+    $item_output = "<router-link class=\"nav-link\" to=\"$link\" $click>$item->title</router-link>";
   } else {
     // link is external, open in new tab
     $item_output = str_replace('<a href', '<a target="_new" href', $item_output);

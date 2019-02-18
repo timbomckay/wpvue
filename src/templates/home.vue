@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>Home</div>
-    <div v-html="post.content.rendered"></div>
+    <div v-if="post.content" v-html="post.content.rendered"></div>
   </div>
 </template>
 

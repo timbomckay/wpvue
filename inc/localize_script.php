@@ -46,6 +46,13 @@ function localize_script() {
 		$response = rest_do_request( $request );
 		$rest_post = $response->get_data();
 
+		$rest_archive = [
+			'posts' => [],
+			'page' => (int)$wp_query->query['paged'],
+			'total' => (int)$wp_query->found_posts,
+			'totalpages' => (int)$wp_query->max_num_pages
+		];
+
 		if( !is_singular() ) {
 			foreach ($wp_query->posts as $k => $p) {
 				$type = get_post_type_object($p->post_type);
@@ -54,8 +61,7 @@ function localize_script() {
 				  '_fields' => 'title,id,link,type,excerpt,featured_image,modified'
 				]);
 				$response = rest_do_request( $request );
-				$rest_archive[] = $response->get_data();
-				$rest_post['pages'] = $wp_query->max_num_pages;
+				$rest_archive['posts'][$k] = $response->get_data();
 			}
 		}
 
@@ -77,7 +83,7 @@ function localize_script() {
 				'slug' => get_post_field( 'post_name', get_option( 'page_for_posts' ) )
 			],
 			'post' => $rest_post,
-			'archive' => isset($rest_archive) ? $rest_archive : [],
+			'archive' => $rest_archive,
 			'rest_routes' => (object) $rest_routes
     ) );
 

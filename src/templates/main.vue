@@ -1,7 +1,7 @@
 <template>
   <transition appear name="slide-fade" mode="out-in">
     <errors v-if="error"></errors>
-    <router-view v-else v-bind:key="key"></router-view>
+    <router-view v-else v-bind:key="transition"></router-view>
   </transition>
 </template>
 
@@ -14,7 +14,7 @@ export default {
   },
   data() {
 		return {
-      key: 0, // used for triggering transitions
+      transition: 0, // used for triggering transitions
       error: !(this.$store.state.post || this.$store.state.archive) // TODO: Switch error to state with store mutation
 		};
 	},
@@ -26,8 +26,8 @@ export default {
         this.fetchData(to);
       }
 
-      // increment key to trigger transition
-      this.key++;
+      // increment transition to trigger transition
+      this.transition++;
     }
   },
   computed: {

@@ -24,15 +24,20 @@ add_action( 'rest_api_init', function() use ($types) {
 
 // Get featured image
 function get_image_src( $object, $field_name, $request ) {
+  if ($post_thumbnail_id = get_post_thumbnail_id( $post_id )) {
+    foreach (['thumbnail','medium','medium_large','large','full'] as $size) {
+      $img = wp_get_attachment_image_src( $post_thumbnail_id, $size, false );
+      $feat_img_array[$size] = [
+        'url' => $img[0],
+        'width' => $img[1],
+        'height' => $img[2]
+      ];
+    }
 
-  foreach (['thumbnail','medium','medium_large','large','full'] as $size) {
-    $img = wp_get_attachment_image_src( $object['featured_media'], $size, false );
-    $feat_img_array[$size]['url'] = $img[0];
-    $feat_img_array[$size]['width'] = $img[1];
-    $feat_img_array[$size]['height'] = $img[2];
+  	$feat_img_array['srcset'] = wp_get_attachment_image_srcset( $object[$field_name] );
+
+  	return $feat_img_array;
   }
 
-	$feat_img_array['srcset'] = wp_get_attachment_image_srcset( $object['featured_media'] );
-	$image = is_array( $feat_img_array ) ? $feat_img_array : false;
-	return $image;
+  return false;
 }

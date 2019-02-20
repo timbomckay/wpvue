@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // TODO: Update 'edit post' link with new id
 
-const actions = {
+export default {
   updateTitle ({state}) {
     const title = state.post.title ? state.post.title.rendered : false;
     document.title = title ? `${title} | ${site.name}` : site.name;
@@ -28,10 +28,19 @@ const actions = {
     // updateTitle after both/either are finished
   },
   fetchPost({ dispatch, commit, state }, route) {
+    let params = {};
+
+    const SLUG = route.params.slug || route.meta.slug;
+    if (SLUG) {
+      params.slug = SLUG;
+    }
+
+    if (!route.meta.archive && route.params.page) {
+      params.page = route.params.page;
+    }
+
     axios.get(`/wp-json/wp/v2/${route.meta.route}`, {
-      params: {
-        slug: route.params.slug || route.meta.slug
-      }
+      params: params
     })
     .then((res) => {
       let post = res.data;
@@ -52,6 +61,8 @@ const actions = {
   fetchArchive({ dispatch, commit, state }, data) {
     const ID = state.post.id;
     const route = data.route || data;
+
+    // TODO: Get page param
 
     const fields = [
       'title',
@@ -96,6 +107,4 @@ const actions = {
       console.log( `Error with fetchArchive : ${res}` );
     } );
   },
-}
-
-export default actions;
+};

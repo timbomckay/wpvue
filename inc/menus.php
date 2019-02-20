@@ -52,13 +52,14 @@ function walker_nav_menu_to_vue_router( $item_output, $item, $depth, $args ) {
 
     $click = '';
 
-    if($item->object !== 'custom') {
+    if($item->object === 'custom') {
+      $store = "\"\$store.commit('postReplace', {})\"";
+    } else {
       // pass ID to the store
-      $store = "\"\$store.commit('postReplace', {id: $item->object_id})\"";
-      $click = "@click.native=$store";
+      $store = "\"\$store.commit('postReplace', {id: $item->object_id, type: '$item->object'})\"";
     }
 
-    $item_output = "<router-link class=\"nav-link\" to=\"$link\" $click>$item->title</router-link>";
+    $item_output = "<router-link class=\"nav-link\" to=\"$link\" @click.native=$store>$item->title</router-link>";
   } else {
     // link is external, open in new tab
     $item_output = str_replace('<a href', '<a target="_new" href', $item_output);

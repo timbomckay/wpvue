@@ -5,9 +5,9 @@
       v-if="post.content"
       v-html="post.content.rendered" />
     <div v-if="archive.posts">
-      <button @click="fetchArchive({route: $route, dir: 'archivePrepend'})">Load Previous Page</button>
+      <button v-if="prev" @click="fetchArchive({route: $route, dir: 'archivePrepend'})">Load Previous Page</button>
       <div v-for="post in archive.posts">
-        <img v-if="post.featured_image.medium.url"
+        <img v-if="post.featured_image"
           :src="post.featured_image.medium.url"
           :width="post.featured_image.medium.width"
           :height="post.featured_image.medium.height" />
@@ -15,7 +15,7 @@
         <div v-html="post.excerpt.rendered" />
         <router-link :to="convertLink(post.link)" @click.native="$store.commit('postReplace', post)">View Post</router-link>
       </div>
-      <button @click="fetchArchive({route: $route, dir: 'archiveAppend'})">Load Next Page</button>
+      <button v-if="next" @click="fetchArchive({route: $route, dir: 'archiveAppend'})">Load Next Page</button>
     </div>
   </div>
 </template>
@@ -46,6 +46,12 @@ export default {
      }
 
      return 'Archive';
+   },
+   prev() {
+     return this.archive.page > 1;
+   },
+   next() {
+     return this.archive.page < this.archive.totalpages;
    }
   },
   created () {

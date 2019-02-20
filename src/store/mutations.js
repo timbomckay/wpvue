@@ -13,16 +13,18 @@ exampleMutation:
 
 */
 
-const mutations = {
+export default {
   postMerge (state, data) {
     state.post = Object.assign(state.post, data);
   },
   postReplace (state, data) {
-    if (data.id === state.post.id) {
-      state.post = Object.assign(state.post, data);
-    } else {
-      state.post = data;
-    }
+    // if (data.id === state.post.id) {
+    //   state.post = Object.assign(state.post, data);
+    // } else {
+    //   state.post = data;
+    // }
+
+    state.post = data;
   },
   archiveReset (state) {
     state.archive = {
@@ -43,6 +45,4 @@ const mutations = {
     state.archive.page -= 1;
     state.archive.posts = data.concat(state.archive.posts);
   }
-}
-
-export default mutations;
+};

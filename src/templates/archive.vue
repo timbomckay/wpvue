@@ -2,7 +2,7 @@
   <div v-if="title">
     <h1 v-text="title" />
     <div
-      v-if="post.content"
+      v-if="post && post.content"
       v-html="post.content.rendered" />
     <div v-if="archive.posts">
       <button v-if="prev" @click="fetchArchive({route: $route, dir: 'archivePrepend'})">Load Previous Page</button>
@@ -13,7 +13,7 @@
           :height="post.featured_image.medium.height" />
         <h2 v-text="post.title.rendered" />
         <div v-html="post.excerpt.rendered" />
-        <router-link :to="convertLink(post.link)" @click.native="$store.commit('postReplace', post)">View Post</router-link>
+        <router-link :to="convertLink(post.link)">View Post</router-link>
       </div>
       <button v-if="next" @click="fetchArchive({route: $route, dir: 'archiveAppend'})">Load Next Page</button>
     </div>
@@ -37,12 +37,12 @@ export default {
      'post', 'archive', 'rest_routes', 'baseURL'
    ]),
    title: function () {
-     if (this.post.name) {
-       return this.post.name
+     if (this.post && this.post.name) {
+       return this.post && this.post.name
      }
 
-     if (this.post.title) {
-       return this.post.title.rendered
+     if (this.post && this.post.title) {
+       return this.post && this.post.title.rendered
      }
 
      return 'Archive';
@@ -56,7 +56,7 @@ export default {
   },
   created () {
     // initial instance, check for total pages to be more than 1
-    if (this.post.pages && (this.post.pages > 1)) {
+    if (this.post && this.post.pages && (this.post.pages > 1)) {
       if (this.$route.params.page) {
         if (this.$route.params.page === this.post.pages) {
           this.page.next = false

@@ -18,15 +18,17 @@ export default {
     state.post = Object.assign(state.post, data);
   },
   postReplace (state, data) {
+    console.log('postReplace');
     // if (data.id === state.post.id) {
     //   state.post = Object.assign(state.post, data);
     // } else {
     //   state.post = data;
     // }
-
+    // TODO: fix New Tab click
     state.post = data;
   },
   archiveReset (state) {
+    console.log('archiveReset');
     state.archive = {
       posts: [],
       page: null,

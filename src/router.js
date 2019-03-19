@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import store from './store/index.js';
+import store from './store';
 
 Vue.use(VueRouter);
 
@@ -122,9 +122,24 @@ const router = new VueRouter({
   scrollBehavior(to) {
     return window.scrollTo({
       top: to.hash ? document.querySelector(to.hash).offsetTop : 0,
-      behavior: 'smooth'
+      // behavior: 'smooth'
     });
-  }
+  },
 });
+
+router.beforeEach((to, from, next) => {
+  // from.matched.length means it's not the initial load
+  console.log('beforeEach', to, from);
+  if(from.matched.length) {
+    store.dispatch('fetchData', to);
+  }
+  next();
+});
+
+// router.beforeResolve((to, from, next) => {
+//   console.log('beforeResolve', to, from);
+//   store.dispatch('release', to);
+//   next();
+// });
 
 export default router;

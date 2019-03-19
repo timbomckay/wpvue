@@ -12,9 +12,10 @@ module.exports = (env, options) => {
   const THEME_URI = '/wp-content/themes/' + process.env.npm_package_name;
 
   let config = merge({
-    entry: {
-      main: path.resolve(__dirname, '../src/main.js')
-    },
+    entry: [
+      'babel-polyfill',
+      path.resolve(__dirname, '../src/main.js')
+    ],
     output: {
       // set publicPath to output path in theme directory
       publicPath: THEME_URI + '/dist/'
@@ -54,9 +55,12 @@ module.exports = (env, options) => {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['@babel/preset-env', {
-                  useBuiltIns: (env !== 'dev') ? 'entry' : false
-                }]
+                [
+                  '@babel/preset-env',
+                  {
+                    useBuiltIns: (env !== 'dev') ? 'entry' : false
+                  }
+                ]
               ],
               plugins: ["transform-object-assign","syntax-dynamic-import"]
             }

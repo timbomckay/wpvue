@@ -10,6 +10,7 @@ module.exports = {
     port: 8080,
     publicPath: "/" + process.env.npm_package_name + "/dist",
     contentBase: path.join(__dirname, "../"),
+    disableHostCheck: true,
     compress: true, // enable gzip
     stats: "minimal", // https://webpack.js.org/configuration/stats/
     headers: {

@@ -6,7 +6,9 @@ import actions from './actions';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: site,
+  state: Object.assign(site, {
+    loading: false
+  }),
   mutations: mutations,
   actions: actions,
   // getters: getters,

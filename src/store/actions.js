@@ -11,23 +11,26 @@ export default {
     const title = state.post.title ? state.post.title.rendered : false;
     document.title = title ? `${title} | ${site.name}` : site.name;
   },
-  fetchData ({ dispatch, commit, state }, route) {
+  async fetchData ({ dispatch, commit, state }, route) {
     // console.log('fetchData:route', route);
     // console.log('state:rest_routes', state.rest_routes);
 
+    if (state.archive.posts.length) {
+      commit('archiveReset');
+    }
+
     if (route.meta.route) {
-      dispatch('fetchPost', route);
+      await dispatch('fetchPost', route);
     }
 
     if (route.meta.archive) {
       dispatch('fetchArchive', route);
-    } else if (state.archive.length) {
-      commit('archiveReset');
     }
 
     // updateTitle after both/either are finished
   },
-  fetchPost({ dispatch, commit, state }, route) {
+  async fetchPost({ dispatch, commit, state }, route) {
+    console.log('fetchPost');
     let params = {};
 
     const SLUG = route.params.slug || route.meta.slug;
@@ -39,7 +42,7 @@ export default {
       params.page = route.params.page;
     }
 
-    axios.get(`/wp-json/wp/v2/${route.meta.route}`, {
+    await axios.get(`/wp-json/wp/v2/${route.meta.route}`, {
       params: params
     })
     .then((res) => {
@@ -53,12 +56,13 @@ export default {
 
       commit('postReplace', post);
       dispatch('updateTitle');
-    } )
+    })
     .catch( ( res ) => {
       console.log( `Error with fetchPost : ${res}` );
-    } );
+    });
   },
   fetchArchive({ dispatch, commit, state }, data) {
+    console.log('fetchArchive');
     const ID = state.post.id;
     const route = data.route || data;
 

@@ -46,6 +46,20 @@ function localize_script() {
 		$response = rest_do_request( $request );
 		$rest_post = $response->get_data();
 
+		if($rest_post['categories']) {
+			foreach ($rest_post['categories'] as $categoryID) {
+				$request = new WP_REST_Request( 'GET', "/wp/v2/categories/$categoryID" );
+				$response = rest_do_request( $request );
+				$rest_tax['categories'][$categoryID] = $response->get_data();
+			}
+
+			foreach ($rest_post['tags'] as $tagID) {
+				$request = new WP_REST_Request( 'GET', "/wp/v2/tags/$tagID" );
+				$response = rest_do_request( $request );
+				$rest_tax['tags'][$tagID] = $response->get_data();
+			}
+		}
+
 		$rest_archive = [
 			'posts' => [],
 			'page' => (int)$wp_query->query['paged'],
@@ -68,6 +82,7 @@ function localize_script() {
     wp_localize_script( 'main', 'site', array(
       'nonce' => wp_create_nonce( 'wp_rest' ),
       'name'	=> get_bloginfo( 'name' ),
+			'description'	=> get_bloginfo( 'description' ),
 			'baseURL' => get_option( 'home' ),
 			'permalinks' => (object) [
 				'base' => get_option( 'permalink_structure' ),
@@ -84,6 +99,7 @@ function localize_script() {
 			],
 			'post' => $rest_post,
 			'archive' => $rest_archive,
+			'taxonomies' => $rest_tax,
 			'rest_routes' => (object) $rest_routes
     ) );
 

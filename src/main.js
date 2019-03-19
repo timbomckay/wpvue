@@ -1,7 +1,8 @@
 import './main.scss';
+import 'babel-polyfill';
 import Vue from 'vue';
 import axios from 'axios';
-import store from './store/index.js';
+import store from './store';
 import Router from './router.js';
 import Main from './templates/main.vue';
 

@@ -1,11 +1,10 @@
 <template>
   <div v-if="title">
     <h1 v-text="title" />
-    <div
-      v-if="post && post.content"
-      v-html="post.content.rendered" />
+    <div v-if="post && post.description" v-html="post.description" />
+    <div v-if="post && post.content" v-html="post.content.rendered" />
     <div v-if="archive.posts">
-      <button v-if="prev" @click="fetchArchive({route: $route, dir: 'archivePrepend'})">Load Previous Page</button>
+      <button v-if="prev" @click="prepend()">Load Previous Page</button>
       <div v-for="post in archive.posts">
         <img v-if="post.featured_image"
           :src="post.featured_image.medium.url"
@@ -15,28 +14,26 @@
         <div v-html="post.excerpt.rendered" />
         <router-link :to="convertLink(post.link)">View Post</router-link>
       </div>
-      <button v-if="next" @click="fetchArchive({route: $route, dir: 'archiveAppend'})">Load Next Page</button>
+      <button v-if="next" @click="append()">Load Next Page</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
+
 export default {
   name: 'Archive',
   data() {
     return {
-      page: {
-        prev: this.$route.params.page ? Number(this.$route.params.page) - 1 : 0,
-        next: false
-      }
+      pages: [Number(this.$route.params.page) || 1]
     };
   },
   computed: {
     ...mapState([
      'post', 'archive', 'rest_routes', 'baseURL'
    ]),
-   title: function () {
+   title() {
      if (this.post && this.post.name) {
        return this.post && this.post.name
      }
@@ -48,28 +45,11 @@ export default {
      return 'Archive';
    },
    prev() {
-     return this.archive.page > 1;
+     return !(this.pages.indexOf(1) + 1) ? this.archive.page - 1 : false;
    },
    next() {
-     return this.archive.page < this.archive.totalpages;
+     return  !(this.pages.indexOf(this.archive.totalpages) + 1) ? Math.max(...this.pages) + 1 : false;
    }
-  },
-  created () {
-    // initial instance, check for total pages to be more than 1
-    if (this.post && this.post.pages && (this.post.pages > 1)) {
-      if (this.$route.params.page) {
-        if (this.$route.params.page === this.post.pages) {
-          this.page.next = false
-        }
-        if (this.$route.params.page < this.post.pages) {
-          // if current page is more than 1 and less than total pages
-          this.page.next = Number(this.$route.params.page) + 1
-        }
-      } else {
-        // assume we're on the first page
-        this.page.next = 2
-      }
-    }
   },
   beforeDestroy() {
     // empty the archive
@@ -79,6 +59,24 @@ export default {
     ...mapActions([
       'fetchArchive'
     ]),
+    ...mapMutations([
+      'archivePrepend',
+      'archiveAppend'
+    ]),
+    async prepend() {
+      // fetch prev page
+      const archive = await this.fetchArchive({route: this.$route, page: this.prev});
+      this.pages.push(this.prev);
+      this.archivePrepend(archive.posts);
+      // update window
+    },
+    async append() {
+      // fetch next page
+      const archive = await this.fetchArchive({route: this.$route, page: this.next});
+      this.pages.push(this.next);
+      this.archiveAppend(archive.posts);
+      // update window
+    },
     convertLink (link) {
       return link.replace(this.baseURL,'');
     },

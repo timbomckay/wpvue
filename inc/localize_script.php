@@ -62,7 +62,7 @@ function localize_script() {
 
 		$rest_archive = [
 			'posts' => [],
-			'page' => (int)$wp_query->query['paged'],
+			'page' => $wp_query->query['paged'] ? (int)$wp_query->query['paged'] : 1,
 			'total' => (int)$wp_query->found_posts,
 			'totalpages' => (int)$wp_query->max_num_pages
 		];

@@ -14,23 +14,28 @@ export default {
   async fetchData ({ dispatch, commit, state }, route) {
     // console.log('fetchData:route', route);
     // console.log('state:rest_routes', state.rest_routes);
-
-    if (state.archive.posts.length) {
-      commit('archiveReset');
-    }
+    let post = {};
+    let archive = {};
 
     if (route.meta.route) {
-      await dispatch('fetchPost', route);
+      post = await dispatch('fetchPost', route);
     }
 
     if (route.meta.archive) {
-      dispatch('fetchArchive', route);
+      archive = await dispatch('fetchArchive', {route, post});
     }
 
-    // updateTitle after both/either are finished
+    commit('postReplace', post);
+
+    if (archive.posts && archive.posts.length) {
+      commit('archiveReplace', archive);
+    } else {
+      commit('archiveReset');
+    }
+
+    dispatch('updateTitle');
   },
   async fetchPost({ dispatch, commit, state }, route) {
-    console.log('fetchPost');
     let params = {};
 
     const SLUG = route.params.slug || route.meta.slug;
@@ -42,28 +47,28 @@ export default {
       params.page = route.params.page;
     }
 
-    await axios.get(`/wp-json/wp/v2/${route.meta.route}`, {
-      params: params
-    })
-    .then((res) => {
-      let post = res.data;
+    try {
+      // fetch data from a url endpoint
+      const response = await axios.get(
+        `/wp-json/wp/v2/${route.meta.route}`,
+        { params: params }
+      );
+
+      let post = response.data;
 
       // if response is array
-      if (res.data.length) {
+      if (response.data.length) {
         // get item with link matching route
-        post = res.data.filter(x => x.link === (state.baseURL + route.path))[0];
+        post = response.data.filter(x => x.link === (state.baseURL + route.path))[0];
       }
 
-      commit('postReplace', post);
-      dispatch('updateTitle');
-    })
-    .catch( ( res ) => {
-      console.log( `Error with fetchPost : ${res}` );
-    });
+      return post;
+    } catch (error) {
+      console.log( `Error with fetchPost : ${error}` );
+    }
   },
-  fetchArchive({ dispatch, commit, state }, data) {
-    console.log('fetchArchive');
-    const ID = state.post.id;
+  async fetchArchive({ dispatch, commit, state }, data) {
+    const ID = data.post ? data.post.id : state.post.id;
     const route = data.route || data;
 
     // TODO: Get page param
@@ -82,33 +87,37 @@ export default {
       '_fields': fields.join()
     };
 
-    if (route.meta.route === 'users') {
-      params.authors = ID;
-    } else {
-      params[route.meta.route] = ID;
+    if (route.name !== 'blog') {
+      if (route.meta.route === 'users') {
+        params.authors = ID;
+      } else {
+        params[route.meta.route] = ID;
+      }
     }
 
-    axios.get( `/wp-json/wp/v2/${route.meta.archive}`, {
-      params: params
-    } )
-    .then( ( res ) => {
-      const total = Number(res.headers['x-wp-total']);
-      const totalpages = Number(res.headers['x-wp-totalpages']);
+    if (data.page) {
+      params.page = data.page;
+    }
 
-      if(data.dir) {
-        commit(data.dir, res.data);
-      } else {
-        // send to state.archive
-        commit('archiveReplace', {
-          posts: res.data,
-          page: Number(route.params.page) || 1,
-          total: total,
-          totalpages: totalpages
-        });
-      }
-    } )
-    .catch( ( res ) => {
-      console.log( `Error with fetchArchive : ${res}` );
-    } );
+    try {
+      // fetch data from a url endpoint
+      const response = await axios.get(
+        `/wp-json/wp/v2/${route.meta.archive}`,
+        { params: params }
+      );
+
+      return {
+        posts: response.data,
+        page: Number(route.params.page) || 1,
+        total: Number(response.headers['x-wp-total']),
+        totalpages: Number(response.headers['x-wp-totalpages'])
+      };
+
+      // if(data.dir) {
+      //   commit(data.dir, response.data);
+      // }
+    } catch (error) {
+      console.log( `Error with fetchArchive : ${error}` );
+    }
   },
 };

@@ -129,17 +129,17 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   // from.matched.length means it's not the initial load
-  console.log('beforeEach', to, from);
   if(from.matched.length) {
     store.dispatch('fetchData', to);
   }
+
   next();
 });
 
 // router.beforeResolve((to, from, next) => {
-//   console.log('beforeResolve', to, from);
-//   store.dispatch('release', to);
-//   next();
+  // console.log('beforeResolve', to, from);
+  // store.dispatch('release', to);
+  // next();
 // });
 
 export default router;
